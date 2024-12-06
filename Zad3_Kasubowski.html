@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cechy modyfikowania formatowania</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .highlight {
+            color: red;
+            font-weight: bold;
+        }
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cechy modyfikowania formatowania:</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>W HTML</th>
+                <th>W CSS</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    Modyfikacja wyglądu elementów strony jest bardzo <span class="highlight">żmudna</span> (atrybuty i znaczniki, które za to odpowiadają, są porozrzucane w różnych miejscach kodu, mieszając się ze strukturą dokumentu).
+                </td>
+                <td>
+                    Rozdzielenie struktury i prezentacji dokumentów, czyli: wszystkie polecenia dotyczące formatowania można umieścić w jednym miejscu (tzw. arkuszu) i powiązać je z konkretnymi elementami, wstawionymi za pomocą czystego (X)HTML. Taki sposób sprawia, że modyfikacja wyglądu stron może przebiegać dużo sprawniej.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Nowe możliwości CSS</h2>
+    <ol>
+        <li>Przeształca atrybuty i znaczniki, znajdujące się bezpośrednio w składni HTML, które dotyczą formatowania (elementy <span class="highlight">zdeprecjonowane</span>), będą stopniowo wycofywane przez producentów przeglądarek internetowych na rzecz rekomendowanych analogicznych deklaracji CSS.</li>
+        <li>Dokumenty pisane z wykorzystaniem arkuszy stylów są zwykle bardziej przejrzyste i krótsze.</li>
+        <li>Style pozwalają w łatwy sposób zarządzać całą serią dokumentów poprzez stosowanie zewnętrznych arkuszy stylów.</li>
+        <li>Dzięki możliwości stosowania klas selektorów znacznie oszczędzamy sobie pisania. W jednym miejscu określamy wszystkie atrybuty formatowania (których może być bardzo dużo), odnoszące się do wielu elementów, które mają wyglądać tak samo.</li>
+        <li>Możliwość stosowania różnorodnych jednostek oraz sposobów definiowania kolorów.</li>
+        <li>Różne wartości pogrubienia czcionki (9 rodzajów).</li>
+        <li>Dodatkowe możliwości formatowania tekstu.</li>
+        <li>Efektowne filtry graficzne.</li>
+        <li>Dodatkowe możliwości określenia wyglądu dokumentów podczas ich drukowania.</li>
+    </ol>
+
+    <p><strong>Uwaga:</strong> W ciągłym opracowaniu są style poziomu trzeciego (CSS 3), które oferują jeszcze więcej rozwiązań. Aby dowiedzieć się więcej, sprawdź stronę organizacji W3C oraz najnowsze specyfikacje.</p>
+
+    <h3>Wady CSS</h3>
+    <ul>
+        <li>Złożona specyfikacja (składnia) nietolerująca żadnych błędów składniowych.</li>
+        <li>Brak sygnalizacji błędów podczas wykonywania stylu CSS oraz podczas ich realizacji.</li>
+        <li>Błędne obsługiwanie CSS przez różne przeglądarki.</li>
+    </ul>
+</body>
+</html>
