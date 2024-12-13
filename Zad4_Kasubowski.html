@@ -1,18 +1,56 @@
-<html>
+<!DOCTYPE html>
+<html lang="pl">
 <head>
-      <link rel="Stylesheet" type="text/css" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sposoby podłączania stylów</title>
 </head>
 <body>
-       <align=centre> 
-<h1>Sposoby podłączania styli do strony (skrócone zestawienie).</h1>
-<h2>1)Zewnętrzny arkusz stylów.</h2>
-  <textarea name="arkusz" rows="6" cols="80">
-<head>
-      <link rel="Stylesheet" type="text/css" href="style.css" />
-</head> 
-    
-  </textarea>
-       </align>
+    <h1>Sposoby podłączania stylów do strony</h1>
+
+    <h2>1) Zewnętrzny arkusz stylów:</h2>
+    <textarea rows="4" cols="50" readonly>
+<link rel="Stylesheet" type="text/css" href="style.css" />
+    </textarea>
+
+    <h2>2) Styl lokalny:</h2>
+    <textarea rows="3" cols="50" readonly>
+<selektor style="cecha1: wartość1; cecha2: wartość2;">Treść</selektor>
+    </textarea>
+
+    <h2>3) Wewnętrzny arkusz stylów:</h2>
+    <textarea rows="6" cols="50" readonly>
+<style type="text/css">
+    selektor1 { cecha1: wartość; cecha2: wartość; }
+    selektor2 { cecha1: wartość; cecha2: wartość; }
+</style>
+    </textarea>
+
+    <h2>4) Alternatywny arkusz stylów:</h2>
+    <textarea rows="6" cols="50" readonly>
+<link rel="Stylesheet" type="text/css" href="style.css" title="Nazwa domyślna" />
+<link rel="Alternate Stylesheet" type="text/css" href="style1.css" title="Nazwa 1" />
+<link rel="Alternate Stylesheet" type="text/css" href="style2.css" title="Nazwa 2" />
+    </textarea>
+
+    <h2>5) Import arkusza stylów:</h2>
+    <textarea rows="4" cols="50" readonly>
+<style type="text/css">
+    @import url("adres_zewnętrznego_arkusza_stylów");
+</style>
+    </textarea>
+
+    <h2>Kaskadowość stylów</h2>
+    <textarea rows="10" cols="50" readonly>
+Kaskadowość stylów określa hierarchię ważności:
+1. Styl lokalny (najważniejszy).
+2. Rozciąganie stylu (SPAN).
+3. Wydzielone bloki (DIV).
+4. Wewnętrzny arkusz stylów.
+5. Zewnętrzny arkusz stylów.
+6. Import arkusza stylów.
+7. Domyślne ustawienia przeglądarki (najmniej ważne).
+    </textarea>
 </body>
 </html>
 
