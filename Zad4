@@ -1,0 +1,13 @@
+<html>
+<head>
+</head>
+<body>
+<h2>Sposoby podłączania styli do strony (skrócone zestawienie).</h2>
+<h1>1)Zewnętrzny arkusz stylów.</h1>
+<textarea name="arkusz" rows="6" cols="80">
+<head>
+<link rel="Stylesheet" type="text/css" href="style.css" />
+</head>
+</textarea>
+
+
