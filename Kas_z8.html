@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wewnętrzny Arkusz Stylów</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border: 1px solid black;
+            margin-top: 20px;
+        }
+        td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+    <ol>
+        <!-- Pytanie 1 -->
+        <li><h1>Gdzie jest wstawiany wewnętrzny arkusz stylów?</h1>
+            <p>Wewnętrzny arkusz stylów jest wstawiany w sekcji <code>&lt;head&gt;</code> dokumentu HTML, wewnątrz znacznika <code>&lt;style&gt;</code>. Styl jest zdefiniowany bezpośrednio w dokumencie HTML, a nie w osobnym pliku.</p>
+        </li>
+
+        <!-- Pytanie 2 -->
+        <li><h1>Składnia teoretyczna (w ramce, konieczne wcięcia)</h1>
+            <table>
+                <tr>
+                    <td>
+                        &lt;style&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;selektor {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cecha1: wartość1;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cecha2: wartość2;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &lt;/style&gt;
+                    </td>
+                </tr>
+            </table>
+        </li>
+
+        <!-- Pytanie 3 -->
+        <li><h1>Jakie mogą być selektory?</h1>
+            <p>Selektorem może być dowolny znacznik HTML, na przykład: <code>p</code> (akapit), <code>h1</code> (nagłówek), <code>td</code> (komórka tabeli), ale także klasy i identyfikatory, takie jak <code>.klasa</code> lub <code>#id</code>.</p>
+        </li>
+
+        <!-- Pytanie 4 -->
+        <li><h1>Jakie mogą być cechy i wartości?</h1>
+            <p>Cecha to właściwość, którą chcemy zmienić, na przykład: <code>color</code>, <code>font-size</code>, <code>background-color</code>. Wartością przypisaną do cechy może być np. <code>blue</code> (kolor niebieski), <code>16px</code> (rozmiar czcionki), <code>red</code> (kolor tła).</p>
+        </li>
+    </ol>
+
+</body>
+</html>
