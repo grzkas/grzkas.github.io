@@ -1,0 +1,20 @@
+	1.	<a href="adres_strony">Tekst linku</a>
+	2.	<title>SPRAWDZIAN</title>
+	3.	<hr>
+	4.	<input type="password" name="haslo">
+	5.	colspan (scalanie poziome) lub rowspan (scalanie pionowe)
+	6.	<ol> i <ul> zagnieżdżone z <li>
+	7.	<h1> do <h6>
+	8.	<meta charset="UTF-8">
+	9.	<img src="adres_obrazka" alt="opis">
+	10.	HTML 2.0 → HTML 3.2 → HTML 4.01 → XHTML 1.0 → HTML5
+	11.	Sprawdzanie poprawności kodu HTML i CSS zgodnie ze standardami W3C
+	12.	&nbsp;
+	13.	<b> lub <strong>, <u>
+	14.	<i>, <sup>, <sub>
+	15.	<h1> (największy), <h6> (najmniejszy)
+	16.	<meta name="keywords" content="słowo1, słowo2, słowo3">
+	17.	<input type="password" name="haslo">
+	18.	Błędy składniowe, brakujące zamknięcia znaczników, niepoprawna struktura dokumentu, użycie przestarzałych elementów
+	19.	<a href="adres_strony" target="_blank">Kliknij tutaj</a>
+	20.	<br>, <hr>, <img>, <meta>, <input>, <link>
