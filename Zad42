@@ -1,0 +1,36 @@
+#include <iostream>
+#include <string>
+#include <windows.h>
+
+using namespace std;
+
+int main() {
+    // Zmiana tytułu konsoli
+    SetConsoleTitle("STRINGI - autor: Andrzej Kowalski");
+
+    // Wczytywanie polskich znaków
+    SetConsoleOutputCP(65001);
+
+    string imie, nazwisko;
+
+    // Pobieranie danych od użytkownika
+    cout << "Podaj swoje imię: ";
+    cin >> imie;
+    cout << "Podaj swoje nazwisko: ";
+    cin >> nazwisko;
+
+    // Obliczanie długości
+    int dlugoscImienia = imie.length();
+    int dlugoscNazwiska = nazwisko.length();
+    int sumaDlugosci = dlugoscImienia + dlugoscNazwiska;
+
+    // Wyświetlanie wyników
+    cout << "\nNazywasz się " << imie << " " << nazwisko << endl;
+    cout << "Twoje imię ma " << dlugoscImienia << " liter, a nazwisko " << dlugoscNazwiska << " liter" << endl;
+    cout << "Łącznie Twoje dane mają " << sumaDlugosci << " liter" << endl;
+    cout << "Twoje inicjały to " << imie[0] << nazwisko[0] << endl;
+
+    // Oczekiwanie na wciśnięcie klawisza
+    system("pause");
+    return 0;
+}
