@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zadanie 21 - Użycie ID</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #ddd;
+        }
+        #example {
+            color: green;
+            font-size: 14pt;
+        }
+        #przyklad {
+            font-style: italic;
+            font-size: 20pt;
+        }
+    </style>
+</head>
+<body>
+    <h1>Zadanie 21</h1>
+    <h2>Użycie ID w HTML i CSS</h2>
+    
+    <h3>Tabela pojęć</h3>
+    <table>
+        <tr>
+            <th>Pojęcie</th>
+            <th>Znaczenie pojęcia</th>
+        </tr>
+        <tr>
+            <td>Co znaczy skrót ID?</td>
+            <td>ID (ang. identifier) oznacza identyfikator, który pozwala na unikalne oznaczenie elementu w kodzie HTML.</td>
+        </tr>
+        <tr>
+            <td>Jak jest cel stosowania ID?</td>
+            <td>ID pozwala na jednoznaczną identyfikację elementu w dokumencie, co ułatwia stylizację oraz obsługę za pomocą JavaScript.</td>
+        </tr>
+        <tr>
+            <td>Znaczenie znaku #</td>
+            <td>Znak # w CSS oznacza selektor identyfikatora. Używa się go do odniesienia do konkretnego elementu o danym ID.</td>
+        </tr>
+        <tr>
+            <td>Jak następuje wywołanie ID?</td>
+            <td>ID przypisuje się do elementu w HTML za pomocą atrybutu id="nazwa", a następnie w CSS odwołuje się do niego jako #nazwa { właściwości }.</td>
+        </tr>
+        <tr>
+            <td>Uwaga na temat stosowania ID</td>
+            <td>ID powinien być unikalny w obrębie całego dokumentu – nie można przypisywać tego samego ID do wielu elementów.</td>
+        </tr>
+        <tr>
+            <td>Czy konieczne jest wyliczanie?</td>
+            <td>Nie, ID nie wymaga numerowania, ale jeśli stosujemy wiele podobnych elementów, lepiej używać klas (class) zamiast ID.</td>
+        </tr>
+    </table>
+    
+    <h3>Teoria</h3>
+    <p>Identyfikatory pozwalają na przypisanie formatowania do unikalnych elementów.</p>
+    <p>Stosujemy znak <b>#</b> przed nazwą ID w arkuszu styli.</p>
+    
+    <h3>Przykład użycia ID</h3>
+    <p id="example">To jest tekst z przypisanym ID "example".</p>
+    <p id="przyklad">To jest drugi przykład użycia ID.</p>
+</body>
+</html>
+ 
+<!-- Grzegorz Kasubowski -->

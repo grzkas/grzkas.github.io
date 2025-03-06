@@ -1,0 +1,15 @@
+body {
+font-family: Verdana, Arial, Helvetica, sans-serif;
+
+color: #003868;
+body{
+color: blue;
+font-size: 40pt;
+}
+p {
+color: green;
+ font-size: 30pt;
+}
+pre, code {
+font-size: 8pt;
+}
