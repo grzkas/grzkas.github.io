@@ -1,0 +1,17 @@
+div{
+    background-color: green;
+    width: 613px;
+}
+#blok1_kasubowski:hover{
+    background-color: light green;
+    font-size: 19mm;
+}
+#blok2_kasubowski:hover{
+    background-color: red;
+    font-size: 19mm;
+}
+#blok3_kasubowskii:hover{
+    background-color: orange;
+    font-size: 19mm;
+}
+
