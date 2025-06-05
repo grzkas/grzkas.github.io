@@ -1,77 +1,85 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Zadanie 74</title>
 </head>
 <body>
-    <p align="center"><b>Kolor tła</b></p>
-    <p align="center">Dzięki temu poleceniu można ustalić kolor tła dla danego elementu.
-        Składnia reguły:
-         selektor {background-color: kolor;}
-        Wyraz selektor ma zastosowanie do wszystkich elementów, którym chcemy nadać tło.
-        Natomiast jako kolor należy podać definicję koloru.
-        </p>
-    <p align="center"><b>Tło Obrazkowe</b></p>
-    <p align="center">Składnia reguły:
-        selektor {background-image: url(adres);}
-       Dzięki temu poleceniu można ustalić tło obrazkowe dla danego elementu.
-       Wyraz selektor ma zastosowanie do wszystkich elementów, którym chcemy nadać tło 
-       obrazka.
-        adres:
-       względna ścieżka dostępu z miejsca w miejsce należy wpisać drogę uwzględniając wszystkie 
-       foldery wchodząc do folderu wpisujemy jego nazwę/ wychodząc z folderu wpisujemy ../ na 
-       końcu podajemy nazwę pliku z rozszerzeniem jeżeli jest to zewnętrzny arkusz CSS, to 
-       ścieżkę podajemy względem niego
-        "none" - usunie obrazek
-       np.
-       background-image: url("file:///c:/CSS/_rozwiazanie/tla_marginesy/grafiki/tlo_1.jpg");
-       Wspólnie z obrazkiem często podaje się dodatkowo kolor tła. W takim przypadku, jeśli 
-       obrazek będzie niedostępny lub użytkownik wyłączy wyświetlanie obrazów, tło przyjmie 
-       podany kolor.
-        </p>
-    <p align="center"><b>Powtarzanie tła</b></p>
-    <p align="center">Składnia reguły:
-        selektor {background-repeat: powtarzanie;}
-       Wyraz selektor ma zastosowanie do wszystkich elementów.
-        powtarzanie:
-        "repeat" - jednocześnie w pionie i poziomie - domyślnie
-        "repeat-x" - w poziomie
-        "repeat-y" - w pionie
-        "no-repeat" - pojedynczy obrazek - bez powtarzania - w górnym-lewym rogu
-       Dzięki temu poleceniu można ustalić jeden z czterech sposobów powtarzania się obrazka 
-       jako tła.</p>
-        <p align="center"><b>Pozycja tła</b></p>
-        <p align="center">Składnia reguły:
-            selektor {background-position: pozycja;}
-           </p>
-           <p align="center"><b>Zaczepienie tła</b></p>
-           <p align="center">Jednozadaniowy opis:
- 
-            selektor {????????????????????;}
-            ?????????????????-->wpisz przykład
-            Parametry:
-            ????????????????????????????????????????
-            </p>
-            <p align="center"><b>Łączenie atrybutów tła</b></p>
-            <p align="center">Jednozadaniowy opis:
-                ?????????????????-->wpisz przykład</p>
-            <p align="center"><b>Gradient liniowy</b></p>
-            <p align="center">Jednozadaniowy opis:
- 
-                    selektor {????????????????????;}
-                    ?????????????????-->wpisz przykład
-                    Parametry:
-                    ????????????????????????????????????????</p>
-            <p align="center"><b>Gradient promienisty</b></p>
-            <p align="center">Jednozadaniowy opis:
- 
-                selektor {????????????????????;}
-                ?????????????????-->wpisz przykład
-                Parametry:
-                ????????????????????????????????????????
-                </p>
-                
+    <table border="1" cellpadding="20" cellspacing="0">
+        <tr>
+            <th>Kolor tła</th>
+            <td>
+                Jednozadaniowy opis:<br><br>
+                selektor { background-color: kolor; }<br><br>
+                Przykład:<br>
+                body { background-color: lightblue; }
+            </td>
+        </tr>
+        <tr>
+            <th>Tło obrazkowe</th>
+            <td>
+                Jednozadaniowy opis:<br><br>
+                selektor { background-image: url(adres); }<br><br>
+                Przykład:<br>
+                background-image: url("file:///c:/CSS/_rozwiazanie/tla_marginesy/grafiki/tlo_1.jpg");
+            </td>
+        </tr>
+        <tr>
+            <th>Powtarzanie tła</th>
+            <td>
+                Jednozadaniowy opis:<br><br>
+                selektor { background-repeat: typ; }<br><br>
+                Przykład:<br>
+                background-repeat: no-repeat; <br><br>
+                Możliwe wartości: repeat, repeat-x, repeat-y, no-repeat
+            </td>
+        </tr>
+        <tr>
+            <th>Pozycja tła</th>
+            <td>
+                Jednozadaniowy opis:<br><br>
+                selektor { background-position: pozycja; }<br><br>
+                Przykład:<br>
+                background-position: center top;
+            </td>
+        </tr>
+        <tr>
+            <th>Zaczepienie tła</th>
+            <td>
+                Jednozadaniowy opis:<br><br>
+                selektor { background-attachment: typ; }<br><br>
+                Przykład:<br>
+                background-attachment: fixed; <br><br>
+                Możliwe wartości: scroll, fixed, local
+            </td>
+        </tr>
+        <tr>
+            <th>Łączenie<br> atrybutów tła</th>
+            <td>
+                Jednozadaniowy opis:<br><br>
+                selektor { background: kolor url(adres) powtarzanie pozycja; }<br><br>
+                Przykład:<br>
+                background: lightblue url('tlo.jpg') no-repeat center top;
+            </td>
+        </tr>
+        <tr>
+            <th>Gradient <br>liniowy</th>
+            <td>
+                Jednozadaniowy opis:<br><br>
+                selektor { background-image: linear-gradient(kierunek, kolor1, kolor2); }<br><br>
+                Przykład:<br>
+                background-image: linear-gradient(to right, red, yellow);
+            </td>
+        </tr>
+        <tr>
+            <th>Gradient <br>promienisty</th>
+            <td>
+                Jednozadaniowy opis:<br><br>
+                selektor { background-image: radial-gradient(kształt, kolor1, kolor2); }<br><br>
+                Przykład:<br>
+                background-image: radial-gradient(circle, white, black);
+            </td>
+        </tr>
+    </table>
 </body>
 </html>
