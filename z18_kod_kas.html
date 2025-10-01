@@ -19,35 +19,34 @@
         var a = parseFloat(prompt("Podaj a:", ""));
         var b = parseFloat(prompt("Podaj b:", ""));
 
-        function suma_kow(a, b) {
+        function suma_kas(a, b) {
             return a + b;
         }
 
-        function odejmowanie_kow(a, b) {
+        function odejmowanie_kas(a, b) {
             return a - b;
         }
 
-        function mnozenie_kow(a, b) {
+        function mnozenie_kas(a, b) {
             return a * b;
         }
 
-        function od_kwadratu_kow(a, b) {
+        function od_kwadratu_kas(a, b) {
             return [a*a, b*b];
         }
 
-        function reszta_z_dzielenia_a_przez_b_kow(a, b) {
+        function reszta_z_dzielenia_a_przez_b_kas(a, b) {
             return a % b;
         }
 
-        document.write("Suma: " + suma_kow(a, b) + "<br>");
-        document.write("Odejmowanie: " + odejmowanie_kow(a, b) + "<br>");
-        document.write("Mnożenie: " + mnozenie_kow(a, b) + "<br>");
-
-        var kwadraty = od_kwadratu_kow(a, b);
+        document.write("Suma: " + suma_kas(a, b) + "<br>");
+        document.write("Odejmowanie: " + odejmowanie_kas(a, b) + "<br>");
+        document.write("Mnożenie: " + mnozenie_kas(a, b) + "<br>");
+        var kwadraty = od_kwadratu_kas(a, b);
         document.write("Kwadrat a: " + kwadraty[0] + "<br>");
         document.write("Kwadrat b: " + kwadraty[1] + "<br>");
 
-        document.write("Reszta z dzielenia a przez b: " + reszta_z_dzielenia_a_przez_b_kow(a, b) + "<br>");
+        document.write("Reszta z dzielenia a przez b: " + reszta_z_dzielenia_a_przez_b_kas(a, b) + "<br>");
         </script>
     </div>
 </body>
