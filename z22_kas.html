@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Zad 22</title>
+        <meta charset="UTF-8">
+
+        <script>
+            function pole_kasubowski(a, b){
+                var a_kas = parseFloat(a);
+                var b_kas = parseFloat(b);
+                var pole = a_kas*b_kas;
+                document.getElementById("pokaz_pole").value=pole.toFixed(2)+"cm^2";
+            }
+
+            function obwod_kasubowski(a, b){
+                var a_kas = parseFloat(a);
+                var b_kas = parseFloat(b);
+                var obwod = (a_kas*2)+(b_kas*2);
+                document.getElementById("pokaz_obwod").value=obwod.toFixed(2)+"cm";
+            }
+        </script>
+    </head>
+
+    <body>
+        <form onsubmit="pole_kasubowski(this.a.value,this.b.value); obwod_kasubowski(this.a.value,this.b.value);return false">
+            Podaj a=
+            <input type="text" size="4" name="a">
+            Podaj b=
+            <input typr="text" size="4" name="b">
+            <br><br>
+            <input type="submit" value="Oblicz">
+            <br><br>
+            Pole= <input type="text" readonly id="pokaz_pole" size="7"> Obwód= <input type="text" readonly id="pokaz_obwod" size="4">
+        </form>
+    </body>
+</html>
