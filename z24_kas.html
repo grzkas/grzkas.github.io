@@ -1,1 +1,27 @@
+<!DOCTYPE html>   
+<head>    
+<title> proste obliczenia</title>    
+<meta charset="utf-8">   
+</head>  
+<body style="background-color: gray;">
+<div style="color:blue;background-color: gray;"> 
+<script language="JavaScript"> 
+var x1_kas=prompt("liczba1=",""); 
+var x2_kas=prompt("liczba2=","");
 
+y1_kas=3*x1_kas*11/13;
+x1_kas_rad=(x1_kas*Math.PI)/180;
+y2_kas=2*Math.cos(x1_kas_rad)+3*Math.sin(x1_kas_rad);
+y3_kas_g=Math.pow(x1_kas,5)+Math.pow(x2_kas,4);
+y3_kas=Math.pow(y3_kas_g,1/3)*Math.abs(x1_kas-x2_kas);
+
+document.write("Wczytane liczby:<br>");
+document.write("x1 = "+x1_kas+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; x2 = "+x2_kas+"<br>"); 
+document.write("x1 = "+x1_kas+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; x1 = "+x1_kas_rad.toFixed(2)+"<br>");
+document.write("y1 = "+y1_kas.toFixed(2)+"<br>");
+document.write("y2 = "+y2_kas.toFixed(2)+"<br>");
+document.write("y3 = "+y3_kas.toFixed(2)+"<br>");
+</script>   
+</div> 
+</body> 
+</html>
