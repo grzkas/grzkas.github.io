@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <title>Zad 20  kod</title>
+    </head>
+    <body>
+        <center>
+        <h1>Zad20 kod</h1>
+        <textarea readonly rows="40" cols="100"><html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Zad20</title>
+</head>
+<body>
+<p>Podaj x punktu A: <input type="text" id="x1"></p>
+<p>Podaj y punktu A: <input type="text" id="y1"></p>
+<p>Podaj x punktu B: <input type="text" id="x2"></p>
+<p>Podaj y punktu B: <input type="text" id="y2"></p>
+<p>Podaj x punktu C: <input type="text" id="x3"></p>
+<p>Podaj y punktu C: <input type="text" id="y3"></p>
+<input type="button" value="Oblicz D1" onclick="AB_kas()"><br><br>
+<input type="button" value="Oblicz D2" onclick="BC_kas()"><br><br>
+<input type="button" value="Oblicz D3" onclick="AC_kas()"><br><br>
+<script>
+function AB_kas() {
+    var x1_kas = parseFloat(document.getElementById("x1").value);
+    var y1_kas = parseFloat(document.getElementById("y1").value);
+    var x2_kas = parseFloat(document.getElementById("x2").value);
+    var y2_kas = parseFloat(document.getElementById("y2").value);
+    var d1_kas = Math.sqrt(Math.pow((x1_kas - x2_kas), 2) + Math.pow((y1_kas - y2_kas), 2));
+    document.write("D1 = "+ d1_kas.toFixed(2));}
+function BC_kas() {
+    var x2_kas = parseFloat(document.getElementById("x2").value);
+    var y2_kas = parseFloat(document.getElementById("y2").value);
+    var x3_kas = parseFloat(document.getElementById("x3").value);
+    var y3_kas = parseFloat(document.getElementById("y3").value);
+    var d2_kas = Math.sqrt(Math.pow((x2_kas - x3_kas), 2) + Math.pow((y2_kas - y3_kas), 2));
+    document.write("D2 = "+ d2_kas.toFixed(2));}
+function AC_kas() {
+    var x1_kas = parseFloat(document.getElementById("x1").value);
+    var y1_kas = parseFloat(document.getElementById("y1").value);
+    var x3_kas = parseFloat(document.getElementById("x3").value);
+    var y3_kas = parseFloat(document.getElementById("y3").value);
+    var d3_kas = Math.sqrt(Math.pow((x1_kas - x3_kas), 2) + Math.pow((y1_kas - y3_kas), 2));
+    document.write("D3 = "+ d3_kas.toFixed(2));}
+</script>
+</body>
+</html>
+</html></textarea>
+        </center>
+    </body>
+</html>
