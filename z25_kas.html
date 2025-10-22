@@ -5,11 +5,11 @@
 <title>Trapez równoramienny</title>
 </head>
 <body style="color: blue; font-size: 20px;">
-<h2>Oblicz pole i obwód trapezu równoramiennego</h2>
+<h2>Oblicz pole i obwód trapezu ruwnoramiennego</h2>
 <form>
-  Górna podstawa (a): <input type="number" id="a"><br><br>
-  Dolna podstawa (b): <input type="number" id="b"><br><br>
-  Wysokość (h): <input type="number" id="h"><br><br>
+  Górna podstawa (A): <input type="number" id="a"><br><br>
+  Dolna podstawa (B): <input type="number" id="b"><br><br>
+  Wysokość (H): <input type="number" id="h"><br><br>
   <input type="button" value="Oblicz" onclick="oblicz()">
 </form>
 
@@ -19,7 +19,7 @@ function Pow_kas(a, b, h) {
   return ((a + b) * h) / 2;
 }
 
-function Obw_kkas(a, b, h) {
+function Obw_kas(a, b, h) {
   let r = Math.abs(a - b) / 2;
   let ramie = Math.sqrt(Math.pow(r, 2) + Math.pow(h, 2));
   return a + b + 2 * ramie;
@@ -35,7 +35,7 @@ function oblicz() {
   document.write("a=" + a + "[j]<br>");
   document.write("b=" + b + "[j]<br>");
   document.write("h=" + h + "[j]<br>");
-  document.write("Pole=" + pole.toFixed(2) + "[j²]<br>");
+  document.write("Pole=" + pole.toFixed(2) + "[j^2]<br>");
   document.write("Obwód=" + obwod.toFixed(2) + "[j]");
 }
 </script>
