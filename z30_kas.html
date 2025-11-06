@@ -1,26 +1,26 @@
 <html> 
      <head> 
            <script type="text/javascript"> 
-                 var komputer = { 
-   nazwisko: 'Kasubowski', 
-   imie: 'Grzegorz', 
-   zawod: 'uczeń', 
-   pokaz: function () 
-     { 
-        document.write(this.nazwisko + ' ' + this.imie) 
-     } 
-  } 
-  komputer.pokaz(); 
+              function komputer(procesor_k,IloscRAM_k,KartaGraficzna_k)//początek konstruktora 
+  { 
+   this.procesor=procesor_k; 
+   this.IloscRAM=IloscRAM_k; 
+   this.KartaGraficzna=KartaGraficzna_k;   
+  }//koniec konstruktora 
+              komputer.prototype.wypisz = function () //definicja metody 
+      { 
+         alert(this.procesor + ' ' + this.IloscRAM+ ' ' + this.KartaGraficzna); 
+      }; 
+  var komputer1 = new komputer("- Procesor,", "Karta Graiczna,", "Pamięć RAM"); // nowy obiekt osoba1 
+  komputer1.wypisz(); // uruchomienie metody wypisz() dotyczącej osoby 1 
+   
+                document.write("Parametry Komputera"+"<br>"); 
+// poniżej dostęp do pól osoby1 
+     document.write("Komputer"+"   "+komputer1.procesor+"   "+komputer1.IloscRAM+"   "+komputer1.KartaGraficzna); 
             </script> 
      </head> 
 <body> 
- <br> 
-   Programowanie obiektowe. <br> 
-     Obiekt  to  Komputer<br> 
-     Marka: Dell
-     Pola:<br> 
-     procesor: Intel<br> 
-     ilość ram: 16gb<br>  
-     metoda:  pokaz<br> 
+ <br> <br>
+   programowanie obiektowe  
 </body> 
 </html> 
