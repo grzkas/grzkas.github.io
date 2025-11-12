@@ -1,26 +1,26 @@
 <html> 
      <head> 
            <script type="text/javascript"> 
-              function komputer(procesor_k,IloscRAM_k,KartaGraficzna_k)//początek konstruktora 
-  { 
-   this.procesor=procesor_k; 
-   this.IloscRAM=IloscRAM_k; 
-   this.KartaGraficzna=KartaGraficzna_k;   
-  }//koniec konstruktora 
-              komputer.prototype.wypisz = function () //definicja metody 
-      { 
-         alert(this.procesor + ' ' + this.IloscRAM+ ' ' + this.KartaGraficzna); 
-      }; 
-  var komputer1 = new komputer("- Procesor,", "Karta Graiczna,", "Pamięć RAM"); // nowy obiekt osoba1 
-  komputer1.wypisz(); // uruchomienie metody wypisz() dotyczącej osoby 1 
-   
-                document.write("Parametry Komputera"+"<br>"); 
-// poniżej dostęp do pól osoby1 
-     document.write("Komputer"+"   "+komputer1.procesor+"   "+komputer1.IloscRAM+"   "+komputer1.KartaGraficzna); 
+                 var komputer = { 
+                    procesor: 'Intel Core i5', 
+                    ilość_RAM: '15 gb', 
+                    Karta_graficzna: 'GeForce RTX 5050', 
+   kas: function () 
+     { 
+        document.write(this.procesor + ' ' + this.ilość_RAM + ' '+ this.Karta_graficzna) 
+     } 
+  } 
+  komputer.kas(); 
             </script> 
      </head> 
 <body> 
- <br> <br>
-   programowanie obiektowe  
+ <br> 
+   Programowanie obiektowe. <br> 
+     Obiekt  to  komputer<br> 
+    
+     Procesor<br> 
+     ilość_RAM<br> 
+     Karta_graficzna<br> 
+     metoda:  kas<br> 
 </body> 
 </html> 
