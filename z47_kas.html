@@ -7,18 +7,16 @@
 <div style="color:red;font-size:50px;"> 
 <script language="JavaScript"> 
 do { 
-var liczba1=prompt("wysokość=",""); 
-var h=parseFloat(liczba1); 
-} 
-while ( h<=0); 
-do { 
-var liczba1=prompt("podstawę=",""); 
-var a=parseFloat(liczba1); 
-while(!( a>0));. 
-} 
-while(!( a>0)); 
-var Pole=a*h/2; 
-document.write("Pole="+Pole.toFixed(2)+" cm^2"+"<br>"); 
+var liczba1=prompt ("a=","");
+var a_kas=parseFloat(liczba1);
+var liczba2=prompt ("b=","");
+var b_kas=parseFloat(liczba2);
+var liczba3=prompt ("c=","");
+var c_kas=parseFloat(liczba3);
+}
+    while
+  (!((a_kas < b_kas + c_kas)&&(b_kas < a_kas + c_kas)&&(c_kas < a_kas + b_kas)&&(a_kas > 0)&&(b_kas > 0)&&(c_kas > 0)));
+    document.write("Boki:"+a_kas+" "+b_kas+" "+c_kas+"<br>");
 </script> 
 </div> 
 </body> 
