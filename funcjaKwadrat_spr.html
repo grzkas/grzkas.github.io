@@ -4,75 +4,76 @@
 
 <h2>Funkcja kwadratowa</h2>
 <h3>Kasubowski Grzegorz 2P</h3>
+<h4>*-00 lub 00 to -nieskonczoność lub nieskonczoność*</h4>
 
-a: <input id="a" type="number"><br>
-b: <input id="b" type="number"><br>
-c: <input id="c" type="number"><br>
-<button onclick="oblicz()">Oblicz</button>
+a: <input id="a_kas" type="number"><br>
+b: <input id="b_kas" type="number"><br>
+c: <input id="c_kas" type="number"><br>
+<button onclick="oblicz_kas()">Oblicz</button>
 
-<div id="wynik"></div>
+<div id="wynik_kas"></div>
 
 <script>
-function oblicz() {
-    let a = parseFloat(document.getElementById("a").value);
-    let b = parseFloat(document.getElementById("b").value);
-    let c = parseFloat(document.getElementById("c").value);
-    let w = document.getElementById("wynik");
+function oblicz_kas() {
+    let a_kas = parseFloat(document.getElementById("a_kas").value);
+    let b_kas = parseFloat(document.getElementById("b_kas").value);
+    let c_kas = parseFloat(document.getElementById("c_kas").value);
+    let w_kas = document.getElementById("wynik_kas");
 
-    if (a === 0) {
-        w.innerHTML = "To nie jest funkcja kwadratowa";
+    if (a_kas === 0) {
+        w_kas.innerHTML = "To nie jest funkcja kwadratowa";
         return;
     }
 
-    let xw = -b / (2 * a);
-    let yw = a * xw * xw + b * xw + c;
+    let xw_kas = -b_kas / (2 * a_kas);
+    let yw_kas = a_kas * xw_kas * xw_kas + b_kas * xw_kas + c_kas;
 
-    let D = b * b - 4 * a * c;
+    let D_kas = b_kas * b_kas - 4 * a_kas * c_kas;
     let miejsca = "";
 
-    if (D > 0) {
-        let x1 = (-b - Math.sqrt(D)) / (2 * a);
-        let x2 = (-b + Math.sqrt(D)) / (2 * a);
-        miejsca = "x1 = " + x1 + ", x2 = " + x2;
-    } else if (D === 0) {
-        miejsca = "x0 = " + xw;
+    if (D_kas > 0) {
+        let x1_kas = (-b_kas - Math.sqrt(D_kas)) / (2 * a_kas);
+        let x2_kas = (-b_kas + Math.sqrt(D_kas)) / (2 * a_kas);
+        miejsca = "x1 = " + x1_kas + ", x2 = " + x2_kas;
+    } else if (D_kas === 0) {
+        miejsca = "x0 = " + xw_kas;
     } else {
-        miejsca = "brak";
+        miejsca_kas = "brak";
     }
 
-    let kanon = a + "(x - " + xw + ")^2 + " + yw;
+    let kanon = a_kas + "(x - " + xw_kas + ")^2 + " + yw_kas;
 
     let ilocz = "";
-    if (D > 0) {
-        let x1 = (-b - Math.sqrt(D)) / (2 * a);
-        let x2 = (-b + Math.sqrt(D)) / (2 * a);
-        ilocz = a + "(x - " + x1 + ")(x - " + x2 + ")";
-    } else if (D === 0) {
-        ilocz = a + "(x - " + xw + ")^2";
+    if (D_kas > 0) {
+        let x1_kas = (-b_kas - Math.sqrt(D_kas)) / (2 * a_kas);
+        let x2_kas = (-b_kas + Math.sqrt(D_kas)) / (2 * a_kas);
+        ilocz = a_kas + "(x - " + x1_kas + ")(x - " + x2_kas + ")";
+    } else if (D_kas === 0) {
+        ilocz = a_kas + "(x - " + xw_kas + ")^2";
     } else {
         ilocz = "brak (D<0)";
     }
 
     let monot = "";
-    if (a > 0) monot = "maleje: (-∞ ; " + xw + ")<br>rosnie: (" + xw + " ; +∞)";
-    else monot = "rosnie: (-∞ ; " + xw + ")<br>maleje: (" + xw + " ; +∞)";
+    if (a_kas > 0) monot = "maleje: (-00 ; " + xw_kas + ")<br>rosnie: (" + xw_kas + " ; +00)";
+    else monot = "rosnie: (-00 ; " + xw_kas + ")<br>maleje: (" + xw_kas + " ; +00)";
 
-    let zbior = (a > 0) ? "[" + yw + " ; +∞)" : "(-∞ ; " + yw + "]";
+    let zbior = (a_kas > 0) ? "[" + yw_kas + " ; +∞)" : "(-00 ; " + yw_kas + "]";
 
     let znak = "";
-    if (D > 0) {
-        let x1 = (-b - Math.sqrt(D)) / (2 * a);
-        let x2 = (-b + Math.sqrt(D)) / (2 * a);
-        if (a > 0) znak = "(-∞ ; " + x1 + ") U (" + x2 + " ; +∞)";
-        else znak = "(" + x1 + " ; " + x2 + ")";
-    } else if (D === 0) {
-        znak = (a > 0) ? "f(x) > 0 dla x ≠ " + xw : "f(x) < 0 dla x ≠ " + xw;
+    if (D_kas > 0) {
+        let x1_kas = (-b_kas - Math.sqrt(D_kas)) / (2 * a_kas);
+        let x2_kas = (-b_kas + Math.sqrt(D_kas)) / (2 * a_kas);
+        if (a_kas > 0) znak_kas = "(-00 ; " + x1_kas + ") U (" + x2_kas + " ; +00)";
+        else znak_kas = "(" + x1_kas + " ; " + x2_kas + ")";
+    } else if (D_kas === 0) {
+        znak = (a_kas > 0) ? "f(x) > 0 dla x != " + xw_kas : "f(x) < 0 dla x != " + xw_kas;
     } else {
-        znak = (a > 0) ? "zawsze > 0" : "zawsze < 0";
+        znak = (a_kas > 0) ? "zawsze > 0" : "zawsze < 0";
     }
 
-    w.innerHTML =
-        "<br>Wierzcholek: (" + xw + ", " + yw + ")" +
+    w_kas.innerHTML =
+        "<br>Wierzcholek: (" + xw_kas + ", " + yw_kas + ")" +
         "<br>Postać kanoniczna: " + kanon +
         "<br>Miejsca zerowe: " + miejsca +
         "<br>Postać iloczynowa: " + ilocz +
