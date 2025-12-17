@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Zadanie 49</title>
+</head>
+<body style="color: red; font-size: 50px;">
+    <script>
+        let liczba_kas, n_kas, silnia_kas = 1;
+        do{
+        liczba_kas = prompt("Podaj n","");
+         n_kas = parseFloat(liczba_kas);
+        } while(n_kas<0);
+        
+        if(n_kas==0){
+        document.write(1);
+        }
+        else{
+          for(i=1; i<=n_kas; i++){
+           silnia_kas *= i;
+            }
+            document.write("Silnia = " + silnia_kas);
+        } 
+    </script>
+</body>
+</html>
