@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+<h2 style="color:green;">MENU:</h2>
+<p style="color:red;">1 - CZERWONY</p>
+<p style="color:blue;">2 - NIEBIESKI</p>
+<input type="button" value="Oblicz" onclick="fun_gal()">
+<script>
+function fun_kas() {
+    var x_kas = prompt("Podaj kolor (1, 2, czerwony, niebieski):", "");
+
+    if (!x_kas) {
+        document.write('<h2 style="color:black;">Nie wprowadzono koloru!</h2>');
+        return;
+    }
+    var x_lower = x_kas.toLowerCase();
+
+    if (x_kas == 1 || x_lower == "czerwony") {
+        document.write('<h1 style="color:red; font-size:70px;">wczytałeś kolor czerwony</h1>');
+    } 
+    else if (x_kas == 2 || x_lower == "niebieski") {
+        document.write('<h1 style="color:blue; font-size:40px;">wczytałeś kolor niebieski</h1>');
+    } 
+    else {
+        document.write('<h2 style="color:black;">Nie rozpoznano koloru!</h2>');
+    }
+}
+</script>
+</body>
+</html>
