@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sprawdzenie danych Kas</title>
+    <meta charset="utf-8">
+</head>
+<body>
+<div style="color:red;font-size:50px;">
+    <script language="JavaScript">
+        do {
+            var liczba1_kas = prompt("wysokość=","");
+            var h_kas = parseFloat(liczba1_kas);
+        }
+        while (h_kas <= 0);
+        do {
+            var liczba2_kas = prompt("podstawę=","");
+            var a_kas = parseFloat(liczba2_kas);
+        }
+        while(!(a_kas > 0));
+        var Pole_kas = a_kas * h_kas / 2;
+        document.write("Pole=" + Pole_kas.toFixed(2) + " cm^2" + "<br>");
+    </script>
+</div>
+</body>
+</html>
