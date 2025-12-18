@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Funkcja kwadratowa</title>
+</head>
+
+<body>
+
+a: <input type="number" id="aKas"><br>
+b: <input type="number" id="bKas"><br>
+c: <input type="number" id="cKas"><br><br>
+
+<button onclick="obliczKas()">Oblicz</button>
+
+<div id="wynikKas" style="font-size:2cm; color:green;"></div>
+
+<script>
+function obliczKas() {
+
+    let aKas = Number(document.getElementById("aKas").value);
+    let bKas = Number(document.getElementById("bKas").value);
+    let cKas = Number(document.getElementById("cKas").value);
+
+    let wynikKas = document.getElementById("wynikKas");
+    wynikKas.innerHTML = "";
+
+    if (aKas === 0) {
+        wynikKas.innerHTML = "To nie jest funkcja kwadratowa";
+        return;
+    }
+
+    let pKas = -bKas / (2 * aKas);
+    let qKas = cKas - (bKas * bKas) / (4 * aKas);
+
+    wynikKas.innerHTML += "Wierzchołek: (" + pKas + " ; " + qKas + ")<br>";
+    wynikKas.innerHTML += "Postać kanoniczna: f(x) = " + aKas +
+        "(x - " + pKas + ")² + " + qKas + "<br>";
+
+    let deltaKas = bKas * bKas - 4 * aKas * cKas;
+
+    if (deltaKas > 0) {
+        let x1Kas = (-bKas - Math.sqrt(deltaKas)) / (2 * aKas);
+        let x2Kas = (-bKas + Math.sqrt(deltaKas)) / (2 * aKas);
+
+        wynikKas.innerHTML += "Miejsca zerowe: x₁ = " + x1Kas +
+            ", x₂ = " + x2Kas + "<br>";
+
+        wynikKas.innerHTML += "Postać iloczynowa: f(x) = " + aKas +
+            "(x - " + x1Kas + ")(x - " + x2Kas + ")<br>";
+
+        if (aKas > 0)
+            wynikKas.innerHTML += "f(x) > 0 dla x ∈ (-oo ; " + x1Kas +
+                ") ∪ (" + x2Kas + " ; +oo)<br>";
+        else
+            wynikKas.innerHTML += "f(x) > 0 dla x ∈ (" + x1Kas +
+                " ; " + x2Kas + ")<br>";
+
+    } else if (deltaKas === 0) {
+        let x0Kas = -bKas / (2 * aKas);
+        wynikKas.innerHTML += "Jedno miejsce zerowe: x₀ = " + x0Kas + "<br>";
+    } else {
+        wynikKas.innerHTML += "Brak miejsc zerowych<br>";
+    }
+
+    if (aKas > 0) {
+        wynikKas.innerHTML += "Maleje: (-oo ; " + pKas + ")<br>";
+        wynikKas.innerHTML += "Rośnie: (" + pKas + " ; +oo)<br>";
+        wynikKas.innerHTML += "Zbiór wartości: [" + qKas + " ; +oo)<br>";
+    } else {
+        wynikKas.innerHTML += "Rośnie: (-oo ; " + pKas + ")<br>";
+        wynikKas.innerHTML += "Maleje: (" + pKas + " ; +oo)<br>";
+        wynikKas.innerHTML += "Zbiór wartości: (-oo ; " + qKas + "]<br>";
+    }
+}
+</script>
+
+</body>
+</html>
