@@ -1,0 +1,21 @@
+1)Wszystkie zmienne z trzema literami pierwszymi nazwiska, unikaj zapisow +- (podczas 
+wyprowadzania danych) 
+2)Wypisuj czcionka 2 cm, kolorem zielonym. 
+3)odróżniaj przedziały otwarte i zamknięte czyli [] -->zamknięte ()-->otwarte 
+4) nieskończoność może być np. -oo  lub +oo 
+5)dwa miejsca zerowe 
+Zadanie 
+Czytać trzy liczby w okienka formularza a, b, c. Są to współczynniki funkcji kwadratowej. 
+Gdy a=0, komunikat "To nie jest funkcja kwadratowa", komputer nic nie oblicza. 
+Gdy a<>0 
+1)Oblicz wierzchołek i wypisz go [pamiętaj, że jest to punkt],  
+2)podaj funkcję kwadratową w postaci kanonicznej. 
+3)Oblicz x1,x2 lub x0 lub napisz brak miejsc zerowych. 
+4)Podaj jeśli jest to możliwe funkcję kwadratową w postaci iloczynowej [unikaj zapisow +
+]. 
+5)Podaj przedziały gdzie funkcja rośnie gdzie maleje. 
+6)Zbiór wartości funkcji 
+7)znak funkcji czyli f(x)>0--->   x należy (--00 ; -5) lub (7 ; +oo) 
+Na ocena 6: narysuj układ współrzędnych i wykres funkcji, zaznacz na osiach 
+jednostki.(wskazówka do oceny cel --> użyj  element canvans, instrukcja JS strona 132 
+)
