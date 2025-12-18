@@ -20,6 +20,8 @@ function oblicz_kas() {
     let c_kas = parseFloat(document.getElementById("c_kas").value);
     let w_kas = document.getElementById("wynik_kas");
 
+    w_kas.style.color = "green";
+
     if (a_kas === 0) {
      w_kas.innerHTML = "To nie jest funkcja kwadratowa";
         return;
