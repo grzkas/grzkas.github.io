@@ -3,13 +3,13 @@
 <body>
 
 <h2>Funkcja kwadratowa</h2>
-<h3>Kasubowski Grzegorz 2P</h3>
 <h4>*-00 lub 00 to -nieskonczoność lub nieskonczoność*</h4>
+
+<button onclick="oblicz_kas()">Oblicz</button><br><br>
 
 a: <input id="a_kas" type="number"><br>
 b: <input id="b_kas" type="number"><br>
-c: <input id="c_kas" type="number"><br>
-<button onclick="oblicz_kas()">Oblicz</button>
+c: <input id="c_kas" type="number"><br><br>
 
 <div id="wynik_kas"></div>
 
@@ -21,65 +21,28 @@ function oblicz_kas() {
     let w_kas = document.getElementById("wynik_kas");
 
     if (a_kas === 0) {
-        w_kas.innerHTML = "To nie jest funkcja kwadratowa";
+     w_kas.innerHTML = "To nie jest funkcja kwadratowa";
         return;
     }
 
     let xw_kas = -b_kas / (2 * a_kas);
     let yw_kas = a_kas * xw_kas * xw_kas + b_kas * xw_kas + c_kas;
-
     let D_kas = b_kas * b_kas - 4 * a_kas * c_kas;
     let miejsca = "";
 
     if (D_kas > 0) {
-        let x1_kas = (-b_kas - Math.sqrt(D_kas)) / (2 * a_kas);
-        let x2_kas = (-b_kas + Math.sqrt(D_kas)) / (2 * a_kas);
-        miejsca = "x1 = " + x1_kas + ", x2 = " + x2_kas;
+    let x1_kas = (-b_kas - Math.sqrt(D_kas)) / (2 * a_kas);
+    let x2_kas = (-b_kas + Math.sqrt(D_kas)) / (2 * a_kas);
+    miejsca = "x1 = " + x1_kas + ", x2 = " + x2_kas;
     } else if (D_kas === 0) {
-        miejsca = "x0 = " + xw_kas;
+     miejsca = "x0 = " + xw_kas;
     } else {
-        miejsca_kas = "brak";
-    }
-
-    let kanon = a_kas + "(x - " + xw_kas + ")^2 + " + yw_kas;
-
-    let ilocz = "";
-    if (D_kas > 0) {
-        let x1_kas = (-b_kas - Math.sqrt(D_kas)) / (2 * a_kas);
-        let x2_kas = (-b_kas + Math.sqrt(D_kas)) / (2 * a_kas);
-        ilocz = a_kas + "(x - " + x1_kas + ")(x - " + x2_kas + ")";
-    } else if (D_kas === 0) {
-        ilocz = a_kas + "(x - " + xw_kas + ")^2";
-    } else {
-        ilocz = "brak (D<0)";
-    }
-
-    let monot = "";
-    if (a_kas > 0) monot = "maleje: (-00 ; " + xw_kas + ")<br>rosnie: (" + xw_kas + " ; +00)";
-    else monot = "rosnie: (-00 ; " + xw_kas + ")<br>maleje: (" + xw_kas + " ; +00)";
-
-    let zbior = (a_kas > 0) ? "[" + yw_kas + " ; +∞)" : "(-00 ; " + yw_kas + "]";
-
-    let znak = "";
-    if (D_kas > 0) {
-        let x1_kas = (-b_kas - Math.sqrt(D_kas)) / (2 * a_kas);
-        let x2_kas = (-b_kas + Math.sqrt(D_kas)) / (2 * a_kas);
-        if (a_kas > 0) znak_kas = "(-00 ; " + x1_kas + ") U (" + x2_kas + " ; +00)";
-        else znak_kas = "(" + x1_kas + " ; " + x2_kas + ")";
-    } else if (D_kas === 0) {
-        znak = (a_kas > 0) ? "f(x) > 0 dla x != " + xw_kas : "f(x) < 0 dla x != " + xw_kas;
-    } else {
-        znak = (a_kas > 0) ? "zawsze > 0" : "zawsze < 0";
+    miejsca = "brak";
     }
 
     w_kas.innerHTML =
-        "<br>Wierzcholek: (" + xw_kas + ", " + yw_kas + ")" +
-        "<br>Postać kanoniczna: " + kanon +
-        "<br>Miejsca zerowe: " + miejsca +
-        "<br>Postać iloczynowa: " + ilocz +
-        "<br>Monotoniczność:<br>" + monot +
-        "<br>Zbiór wartości: " + zbior +
-        "<br>Znak funkcji: " + znak;
+        "<br>Wierzchołek: (" + xw_kas + ", " + yw_kas + ")" +
+        "<br>Miejsca zerowe: " + miejsca;
 }
 </script>
 
