@@ -1,0 +1,49 @@
+// Zadanie 1
+function dodajLiczby(a, b) {
+    return a + b;
+}
+
+// Zadanie 2
+function czyParzysta(liczba) {
+    return liczba % 2 === 0;
+}
+
+// Zadanie 3
+function poleProstokata(a, b) {
+    return a * b;
+}
+
+// Zadanie 4
+function odwrocTekst(tekst) {
+    return tekst.split("").reverse().join("");
+}
+
+// Zadanie 5
+function filtrujParzyste(tablica) {
+    return tablica.filter(function (liczba) {
+        return liczba % 2 === 0;
+    });
+}
+
+// Zadanie 6
+function czyEmailPoprawny(email) {
+    return email.includes("@") && email.indexOf(".") > email.indexOf("@");
+}
+
+// Zadanie 7
+function generujHaslo(dlugosc) {
+    let znaki = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let haslo = "";
+
+    for (let i = 0; i < dlugosc; i++) {
+        let losowyIndex = Math.floor(Math.random() * znaki.length);
+        haslo += znaki[losowyIndex];
+    }
+
+    return haslo;
+}
+
+// Zadanie 8
+function cToF(celsius) {
+    return celsius * 1.8 + 32;
+}
