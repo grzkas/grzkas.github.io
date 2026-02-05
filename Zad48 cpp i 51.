@@ -1,0 +1,93 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    double a[5][2];
+    double A[5];
+
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 2; j++) {
+            cout << "Podaj element a[" << i << "][" << j << "] = ";
+            cin >> a[i][j];
+        }
+    }
+
+    cout << endl;
+
+    for (int i = 0; i < 5; i++) {
+        double suma = 0;
+        for (int j = 0; j < 2; j++) {
+            cout << a[i][j] << " ";
+            suma += a[i][j];
+        }
+        A[i] = suma / 2;
+        cout << "srednia w wierszu " << i << " macierzy wynosi " << A[i] << endl;
+    }
+
+    double min = A[0], max = A[0];
+    int imin = 0, imax = 0;
+
+    for (int i = 1; i < 5; i++) {
+        if (A[i] < min) {
+            min = A[i];
+            imin = i;
+        }
+        if (A[i] > max) {
+            max = A[i];
+            imax = i;
+        }
+    }
+
+    cout << "tablica srednich wyglada nastepujaco: A[ ";
+    for (int i = 0; i < 5; i++)
+        cout << A[i] << " ";
+    cout << "]" << endl;
+
+    cout << "max: A[" << imax << "] = " << max << endl;
+    cout << "min: A[" << imin << "] = " << min << endl;
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int a[10];
+    int n;
+
+    do {
+        cout << "Podaj ilosc elementow tablicy a: ";
+        cin >> n;
+        if (n < 1 || n > 10)
+            cout << "Tablica musi zawierac minimum 1 a maksimum 10 elementow !" << endl;
+    } while (n < 1 || n > 10);
+
+    for (int i = 0; i < n; i++) {
+        cout << "Podaj a[" << i << "] = ";
+        cin >> a[i];
+    }
+
+    for (int i = 0; i < n / 2; i++) {
+        int schowek = a[i];
+        a[i] = a[n - 1 - i];
+        a[n - 1 - i] = schowek;
+    }
+
+    cout << endl << "Odwrocona tablica a:" << endl;
+    for (int i = 0; i < n; i++)
+        cout << "a[" << i << "] = " << a[i] << endl;
+
+    return 0;
+}
