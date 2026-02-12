@@ -1,0 +1,48 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int n = 7;
+    int t_kow[n];
+
+    // Wprowadzanie danych
+    cout << "Podaj 7 liczb do tablicy:\n";
+    for (int i = 0; i < n; i++) {
+        cout << "t[" << i << "] = ";
+        cin >> t_kow[i];
+    }
+
+    // Wyświetlenie tablicy przed sortowaniem
+    cout << "\nWyglad wprowadzonej tablicy:\n";
+    for (int i = 0; i < n; i++) {
+        cout << t_kow[i] << " ";
+    }
+    cout << endl;
+
+    // Sortowanie bąbelkowe
+    int zamiana;
+    int SCHOWEK;
+
+    do {
+        zamiana = 0;
+
+        for (int i = 0; i < n - 1; i++) {
+            if (t_kow[i] > t_kow[i + 1]) {
+                SCHOWEK = t_kow[i];
+                t_kow[i] = t_kow[i + 1];
+                t_kow[i + 1] = SCHOWEK;
+                zamiana++;
+            }
+        }
+
+    } while (zamiana != 0);
+
+    // Wyświetlenie tablicy po sortowaniu
+    cout << "\nWyglad posortowanej rosnaco tablicy:\n";
+    for (int i = 0; i < n; i++) {
+        cout << t_kow[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
