@@ -46,3 +46,75 @@ public class Samochod {
         }
     }
 }
+
+
+
+
+
+
+
+public class Main {
+
+    public static void main(String[] args) {
+        Samochod auto = new Samochod("Audi", 10);
+
+        auto.zatankuj(30);
+        System.out.println("Paliwo po tankowaniu: " + auto.getPaliwo());
+
+        auto.zatankuj(50);
+        System.out.println("Paliwo po tankowaniu: " + auto.getPaliwo());
+
+        System.out.println("Model: " + auto.getModel());
+        System.out.println("Przebieg: " + auto.getPrzebieg());
+    }
+}
+
+// =============================
+
+class Samochod {
+
+    // Pola prywatne
+    private String model;
+    private double przebieg;
+    private double paliwo;
+
+    private static final double POJEMNOSC_BAKU = 60.0;
+
+    // Konstruktor
+    public Samochod(String model, double paliwoPoczatkowe) {
+        this.model = model;
+        this.przebieg = 0;
+
+        if (paliwoPoczatkowe > 0) {
+            this.paliwo = Math.min(paliwoPoczatkowe, POJEMNOSC_BAKU);
+        } else {
+            this.paliwo = 0;
+        }
+    }
+
+    // Gettery
+    public String getModel() {
+        return model;
+    }
+
+    public double getPrzebieg() {
+        return przebieg;
+    }
+
+    public double getPaliwo() {
+        return paliwo;
+    }
+
+    // Tankowanie
+    public void zatankuj(double ilosc) {
+        if (ilosc > 0) {
+            double nowePaliwo = this.paliwo + ilosc;
+
+            if (nowePaliwo <= POJEMNOSC_BAKU) {
+                this.paliwo = nowePaliwo;
+            } else {
+                this.paliwo = POJEMNOSC_BAKU;
+            }
+        }
+    }
+}
