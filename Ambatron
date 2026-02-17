@@ -1,0 +1,48 @@
+public class Samochod {
+
+    // 1. Pola ukryte przed światem
+    private String model;
+    private double przebieg;
+    private double paliwo;
+
+    private static final double POJEMNOSC_BAKU = 60.0;
+
+    // 2. Konstruktor ustawia model i paliwo, przebieg = 0
+    public Samochod(String model, double paliwoPoczatkowe) {
+        this.model = model;
+        this.przebieg = 0;
+
+        if (paliwoPoczatkowe > 0) {
+            this.paliwo = Math.min(paliwoPoczatkowe, POJEMNOSC_BAKU);
+        } else {
+            this.paliwo = 0;
+        }
+    }
+
+    // 3. Gettery dla wszystkich pól
+    public String getModel() {
+        return model;
+    }
+
+    public double getPrzebieg() {
+        return przebieg;
+    }
+
+    public double getPaliwo() {
+        return paliwo;
+    }
+
+    // 4. Tankowanie z limitem baku
+    public void zatankuj(double ilosc) {
+        if (ilosc > 0) {
+            double nowePaliwo = this.paliwo + ilosc;
+
+            if (nowePaliwo <= POJEMNOSC_BAKU) {
+                this.paliwo = nowePaliwo;
+            } else {
+                // nadmiar ignorowany
+                this.paliwo = POJEMNOSC_BAKU;
+            }
+        }
+    }
+}
