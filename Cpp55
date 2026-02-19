@@ -6,13 +6,11 @@ using namespace std;
 
 HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
-// ustawienie koloru tekstu
 void setColor(int color)
 {
     SetConsoleTextAttribute(hConsole, color);
 }
 
-// ustawienie pozycji kursora
 void gotoxy(int x, int y)
 {
     COORD pos;
@@ -23,50 +21,43 @@ void gotoxy(int x, int y)
 
 int main()
 {
-    // kolory tęczy (tablica!)
-    int colors[] = {
-        12, // czerwony
-        6,  // pomarańczowy
-        14, // żółty
-        10, // zielony
-        11, // jasny niebieski
-        9,  // niebieski
-        13  // fioletowy
-    };
+    system("cls");
 
-    const int colorCount = sizeof(colors) / sizeof(colors[0]);
+    // kolory jak w tęczy
+    int colors[] = {12, 6, 14, 10, 11, 9, 13};
+    const int layers = 7;
 
     int centerX = 40;
     int centerY = 25;
     int radius = 20;
 
-    system("cls");
-
     // rysowanie od lewej do prawej
     for (int x = -radius; x <= radius; x++)
     {
-        for (int c = 0; c < colorCount; c++)
+        for (int layer = 0; layer < layers; layer++)
         {
-            int r = radius - c;
+            int r = radius - layer;
 
-            double y = sqrt(r * r - x * x);
+            if (r * r - x * x < 0) continue;
+
+            int y = (int)sqrt(r * r - x * x);
 
             int drawX = centerX + x;
-            int drawY = centerY - (int)y;
+            int drawY = centerY - y;
 
-            setColor(colors[c]);
+            setColor(colors[layer]);
             gotoxy(drawX, drawY);
-            cout << "*";
 
-            // dźwięk podczas rysowania
-            Beep(400 + c * 80, 30);
+            // małe kolorowe znaki jak na zdjęciu
+            cout << char(254);
+
+            Beep(500 + layer * 80, 20);
         }
 
-        Sleep(60); // umiarkowane tempo
+        Sleep(55); // umiarkowane tempo
     }
 
     setColor(7);
     gotoxy(0, 29);
-
     return 0;
 }
