@@ -1,0 +1,72 @@
+#include <iostream>
+#include <windows.h>
+#include <cmath>
+
+using namespace std;
+
+HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+// ustawienie koloru tekstu
+void setColor(int color)
+{
+    SetConsoleTextAttribute(hConsole, color);
+}
+
+// ustawienie pozycji kursora
+void gotoxy(int x, int y)
+{
+    COORD pos;
+    pos.X = x;
+    pos.Y = y;
+    SetConsoleCursorPosition(hConsole, pos);
+}
+
+int main()
+{
+    // kolory tęczy (tablica!)
+    int colors[] = {
+        12, // czerwony
+        6,  // pomarańczowy
+        14, // żółty
+        10, // zielony
+        11, // jasny niebieski
+        9,  // niebieski
+        13  // fioletowy
+    };
+
+    const int colorCount = sizeof(colors) / sizeof(colors[0]);
+
+    int centerX = 40;
+    int centerY = 25;
+    int radius = 20;
+
+    system("cls");
+
+    // rysowanie od lewej do prawej
+    for (int x = -radius; x <= radius; x++)
+    {
+        for (int c = 0; c < colorCount; c++)
+        {
+            int r = radius - c;
+
+            double y = sqrt(r * r - x * x);
+
+            int drawX = centerX + x;
+            int drawY = centerY - (int)y;
+
+            setColor(colors[c]);
+            gotoxy(drawX, drawY);
+            cout << "*";
+
+            // dźwięk podczas rysowania
+            Beep(400 + c * 80, 30);
+        }
+
+        Sleep(60); // umiarkowane tempo
+    }
+
+    setColor(7);
+    gotoxy(0, 29);
+
+    return 0;
+}
