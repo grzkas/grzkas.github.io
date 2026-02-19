@@ -1,42 +1,59 @@
 #include <iostream>
 using namespace std;
 
-int main() {
-    const int n = 7;
-    int tab_kow[n];
+int main()
+{
+    const int N = 7;
+    int tab_kw[N];
 
     
-    cout << "Podaj 7 elementow tablicy:\n";
-    for (int i = 0; i < n; i++) {
-        cout << "tab[" << i << "] = ";
-        cin >> tab_kas[i];
-    }
+    cout << "Podaj numer dziennika: ";
+    cin >> tab_kw[0];
 
-    // Wyswietlenie wczytanej tablicy
-    cout << "\nWyglad wprowadzonej tablicy:\n";
-    for (int i = 0; i < n; i++) {
-        cout << tab_kas[i] << " ";
-    }
+    cout << "Podaj liczbe liter imienia: ";
+    cin >> tab_kw[1];
+
+    cout << "Podaj swoj wzrost (cm): ";
+    cin >> tab_kw[2];
+
+    cout << "Podaj liczbe liter nazwiska: ";
+    cin >> tab_kw[3];
+
+    cout << "Podaj ostatnie dwie cyfry roku: ";
+    cin >> tab_kw[4];
+
+    cout << "Podaj dzisiejszy dzien: ";
+    cin >> tab_kw[5];
+
+    cout << "Podaj obecny miesiac: ";
+    cin >> tab_kw[6];
+
+    
+    cout << "\nTablica przed sortowaniem:\n";
+    for(int i = 0; i < N; i++)
+        cout << tab_kw[i] << " ";
     cout << endl;
 
-    // ===== SORTOWANIE PRZEZ WSTAWIANIE =====
-    for (int i = 1; i < n; i++) {
-        int bufor = tab_kow[i];   // zapamiętujemy element
-        int j = i;
+    
+    int Bufor_trzy_pierwsze_litery;
 
-        while (j > 0 && tab_kow[j - 1] > bufor) {
-            tab_kow[j] = tab_kow[j - 1];  // przesuwamy element w prawo
-            j--;
-        }
+    for(int i = 0; i < N - 1; i++)
+    {
+        int min = i;
 
-        tab_kow[j] = bufor;  // wstawiamy element na właściwe miejsce
+        for(int j = i + 1; j < N; j++)
+        {
+            if(tab_kw[j] < tab_kw[min])
+                min = j;
+        
+        Bufor_trzy_pierwsze_litery = tab_kw[min];
+        tab_kw[min] = tab_kw[i];
+        tab_kw[i] = Bufor_trzy_pierwsze_litery;
     }
-
-    // Wyswietlenie posortowanej tablicy
-    cout << "\nPosortowana rosnaco tablica:\n";
-    for (int i = 0; i < n; i++) {
-        cout << tab_kow[i] << " ";
-    }
+    
+    cout << "\nTablica po sortowaniu rosnaco:\n";
+    for(int i = 0; i < N; i++)
+        cout << tab_kw[i] << " ";
     cout << endl;
 
     return 0;
