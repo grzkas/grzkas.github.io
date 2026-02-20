@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Poziom 2</title>
+</head>
+<body>
+<h2>Poziom 2</h2>
+<div id="wyniki"></div>
+
+<script>
+const w = document.getElementById("wyniki");
+function wypisz(text){ w.innerHTML += text + "<br>"; }
+
+        //1.
+const oceny = [2,3,5,4,1,5];
+let suma = 0;
+for(let i=0;i<oceny.length;i++) suma+=oceny[i];
+wypisz("Średnia ocen: " + (suma/oceny.length));
+
+wypisz("Oceny pozytywne:");
+for(let i=0;i<oceny.length;i++){
+    if(oceny[i]>=3) wypisz(oceny[i]);
+}
+
+        //2.
+function parzyste(tab){
+    const wynik=[];
+    for(let i=0;i<tab.length;i++){
+        if(tab[i]%2===0) wynik.push(tab[i]);
+    }
+    return wynik;
+}
+wypisz("Liczby parzyste: " + parzyste([12,2,3,9,15,6]).join(", "));
+
+        //3.
+const tech = ["HTML","CSS","JS"];
+const odw=[];
+for(let i=tech.length-1;i>=0;i--) odw.push(tech[i]);
+wypisz("Odwrócone: " + odw.join(", "));
+
+        //4.
+function sprawdz(tab,el){
+    for(let i=0;i<tab.length;i++){
+        if(tab[i]===el) return true;
+    }
+    return false;
+}
+wypisz("Czy jest 4: " + sprawdz([5,2,7,4],4));
+</script>
+</body>
+</html>

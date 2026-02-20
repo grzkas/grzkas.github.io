@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Poziom 1</title>
+</head>
+<body>
+<h2>Poziom 1</h2>
+<div id="wyniki"></div>
+
+<script>
+const w = document.getElementById("wyniki");
+
+function wypisz(text) {
+    w.innerHTML += text + "<br>";
+}
+
+        //1.
+const imiona = ["Grzegorz", "Kamil", "Maja", "Szymon", "Mikołaj"];
+wypisz("Długość tablicy: " + imiona.length);
+wypisz("Pierwsze imię: " + imiona[0]);
+wypisz("Ostatnie imię: " + imiona[imiona.length - 1]);
+
+        //2.
+function suma(tab) {
+    let s = 0;
+    for (let i = 0; i < tab.length; i++) {
+        s += tab[i];
+    }
+    return s;
+}
+wypisz("Suma [7,5,3,2]: " + suma([7,5,3,2]));
+
+        //3.
+const liczby = [3,7,1,9,4];
+let max = liczby[0];
+for (let i = 1; i < liczby.length; i++) {
+    if (liczby[i] > max) max = liczby[i];
+}
+wypisz("Największa liczba: " + max);
+
+        //4.
+let tab = [24,34,378,111,16];
+tab.unshift(5);
+tab.push(60);
+wypisz("Tablica po dodaniu: " + tab.join(", "));
+</script>
+</body>
+</html>
+            

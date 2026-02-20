@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Poziom 4</title>
+</head>
+<body>
+<h1>Poziom 4 – zadania życiowe</h1>
+<div id="wyniki"></div>
+
+<script>
+const w = document.getElementById("wyniki");
+function wypisz(text){ w.innerHTML += text + "<br>"; }
+
+        //1.
+const uczniowie = [
+{imie:"Ola",punkty:78},
+{imie:"Jan",punkty:45},
+{imie:"Ania",punkty:92}
+];
+let sumaPkt=0;
+for(let i=0;i<uczniowie.length;i++){
+    sumaPkt+=uczniowie[i].punkty;
+    if(uczniowie[i].punkty>=50) wypisz("Zdał: "+uczniowie[i].imie);
+}
+wypisz("Średnia punktów: "+(sumaPkt/uczniowie.length));
+
+        //2.
+function usunDuplikaty(tab){ return [...new Set(tab)]; }
+wypisz("Tablica bez duplikatów: "+usunDuplikaty([1,2,2,3,4,4,5]).join(", "));
+
+        //3.
+const zakupy=["chleb","mleko","ser","chleb","masło"];
+const licznik={};
+for(let i=0;i<zakupy.length;i++){
+    if(licznik[zakupy[i]]) licznik[zakupy[i]]++;
+    else licznik[zakupy[i]]=1;
+}
+wypisz("Produkty:");
+for(let key in licznik) wypisz(key + ": " + licznik[key]);
+</script>
+</body>
+</html>

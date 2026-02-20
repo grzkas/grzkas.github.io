@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Poziom 3</title>
+</head>
+<body>
+<h2>Poziom 3</h2>
+<div id="wyniki"></div>
+
+<script>
+const w = document.getElementById("wyniki");
+function wypisz(text){ w.innerHTML += text + "<br>"; }
+
+        //1.
+const liczby = [1,2,3,4,5];
+const kwadraty = liczby.map(x=>x*x);
+wypisz("Kwadraty: " + kwadraty.join(", "));
+
+        //2.
+const imiona = ["Anna","Jan","Krzysztof","Ola"];
+const dlugie = imiona.filter(i=>i.length>3);
+wypisz("Imiona dłuższe niż 3 znaki: " + dlugie.join(", "));
+
+        //3.
+const liczby2 = [5,10,15];
+const tekst = liczby2.join(" - ");
+wypisz("String: " + tekst);
+</script>
+</body>
+</html>
