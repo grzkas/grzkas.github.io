@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Poziom 3</title>
+</head>
+<body>
+
+<h2>Produkty</h2>
+<div id="produkty"></div>
+
+<script>
+class Produkt {
+    constructor(nazwa, cena) {
+        this.nazwa = nazwa;
+        this.cena = cena;
+        this.element = null;
+    }
+
+    render(container) {
+        const div = document.createElement("div");
+        div.style.border = "1px solid black";
+        div.style.padding = "10px";
+        div.style.margin = "5px";
+
+        const info = document.createElement("span");
+        info.textContent = `${this.nazwa} - ${this.cena.toFixed(2)} zł`;
+
+        const btnUsun = document.createElement("button");
+        btnUsun.textContent = "Usuń";
+        btnUsun.onclick = () => {
+            div.remove();
+            console.log(`Usunięto produkt: ${this.nazwa}`);
+        };
+
+        const btnPromo = document.createElement("button");
+        btnPromo.textContent = "Promocja -20%";
+        btnPromo.onclick = () => {
+            this.cena *= 0.8;
+            info.textContent = `${this.nazwa} - ${this.cena.toFixed(2)} zł`;
+            console.log(`Promocja: ${this.nazwa}, nowa cena: ${this.cena}`);
+        };
+
+        div.appendChild(info);
+        div.appendChild(document.createElement("br"));
+        div.appendChild(btnUsun);
+        div.appendChild(btnPromo);
+
+        container.appendChild(div);
+        this.element = div;
+    }
+}
+
+const produkty = [
+    new Produkt("Laptop", 4000),
+    new Produkt("Telefon", 2500),
+    new Produkt("Monitor", 1200),
+    new Produkt("Klawiatura", 300)
+];
+
+const kontener = document.getElementById("produkty");
+produkty.forEach(p => p.render(kontener));
+
+console.log("Produkty:", produkty);
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Poziom 4</title>
+</head>
+<body>
+
+<h2>Sprawdź konsolę przeglądarki</h2>
+
+<script>
+class Osoba {
+    constructor(imie, wiek) {
+        this.imie = imie;
+        this.wiek = wiek;
+    }
+
+    przywitaj() {
+        console.log(`Cześć, jestem ${this.imie}`);
+    }
+
+    get wiek() {
+        return this._wiek;
+    }
+
+    set wiek(value) {
+        if (value < 0) {
+            console.error("Błąd: wiek nie może być mniejszy niż 0");
+        } else {
+            this._wiek = value;
+        }
+    }
+}
+
+class Nauczyciel extends Osoba {
+    #pensja;
+
+    constructor(imie, wiek, przedmiot, pensja) {
+        super(imie, wiek);
+        this.przedmiot = przedmiot;
+        this.#pensja = pensja;
+    }
+
+    ucz() {
+        console.log(`${this.imie} uczy przedmiotu: ${this.przedmiot}`);
+    }
+
+    przywitaj() {
+        console.log(`Dzień dobry, jestem nauczycielem ${this.imie}`);
+    }
+
+    pobierzPensje() {
+        return this.#pensja;
+    }
+}
+
+// TESTY
+const osoba1 = new Osoba("Jan", 30);
+osoba1.przywitaj();
+
+const nauczyciel1 = new Nauczyciel("Anna", 40, "Matematyka", 5000);
+nauczyciel1.przywitaj();
+nauczyciel1.ucz();
+console.log("Pensja:", nauczyciel1.pobierzPensje());
+
+// test walidacji
+nauczyciel1.wiek = -5;
+</script>
+
+</body>
+</html>
