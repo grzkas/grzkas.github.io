@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<script>
+
+let tekst = " Programowanie jest super! ";
+
+// długość tekstu
+console.log("Długość:", tekst.length);
+
+// usunięcie spacji z początku i końca
+let trimTekst = tekst.trim();
+console.log("Trim:", trimTekst);
+
+// wielkie litery
+console.log("Duże litery:", tekst.toUpperCase());
+
+// sprawdzenie czy zawiera słowo
+console.log("Czy zawiera 'super':", tekst.includes("super"));
+
+</script>
+
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<script>
+
+// split
+let dane = "Marcin;Kowalski;30;Gdańsk";
+let tab = dane.split(";");
+
+console.log("Nazwisko:", tab[1]);
+
+
+// funkcja sprawdzająca .pl
+function sprawdzMail(mail){
+return mail.endsWith(".pl");
+}
+
+console.log(sprawdzMail("test@gmail.pl"));
+
+
+// zamiana słowa
+let zdanie = "Lubię koty, bo koty są puszyste";
+let noweZdanie = zdanie.replace("koty","psy");
+
+console.log(noweZdanie);
+
+
+// pierwszy i ostatni znak
+let imie = "Jan";
+
+console.log("Pierwszy znak:", imie[0]);
+console.log("Ostatni znak:", imie[imie.length-1]);
+
+</script>
+
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<input id="pesel" placeholder="Podaj PESEL">
+<button onclick="sprawdz()">Sprawdź</button>
+
+<p id="wynik"></p>
+
+<script>
+
+function sprawdz(){
+
+let pesel = document.getElementById("pesel").value;
+let wynik = document.getElementById("wynik");
+
+if(pesel.length == 11){
+wynik.innerHTML = maskuj(pesel);
+wynik.style.color = "green";
+}else{
+wynik.innerHTML = "Błąd";
+wynik.style.color = "red";
+}
+
+}
+
+function maskuj(pesel){
+
+let ostatnie = pesel.slice(-4);
+
+return "*******" + ostatnie;
+
+}
+
+</script>
+
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<script>
+
+// klasa SlugGenerator
+class SlugGenerator{
+
+generuj(tytul){
+
+return tytul
+.toLowerCase()
+.replace(/[^\w\s]/g,"")
+.replace(/\s+/g,"-");
+
+}
+
+}
+
+let slug = new SlugGenerator();
+console.log(slug.generuj("Co to jest OOP?"));
+
+
+// klasa Analizator
+class Analizator{
+
+liczSamogloski(tekst){
+
+let sam = "aeiouy";
+let licznik = 0;
+
+for(let i=0;i<tekst.length;i++){
+
+if(sam.includes(tekst[i].toLowerCase())){
+licznik++;
+}
+
+}
+
+return licznik;
+
+}
+
+}
+
+let a = new Analizator();
+console.log("Samogłoski:", a.liczSamogloski("Programowanie"));
+
+
+// odwracanie stringa
+function odwroc(str){
+
+let wynik = "";
+
+for(let i=str.length-1;i>=0;i--){
+wynik += str[i];
+}
+
+return wynik;
+
+}
+
+console.log(odwroc("ABC"));
+
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
