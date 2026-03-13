@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Sprawdzanie PESEL</title>
+</head>
+<body>
+
+<h3>Sprawdź numer PESEL</h3>
+
+<input type="text" id="peselInput" placeholder="Wpisz PESEL">
+<button onclick="sprawdzPesel()">Sprawdź</button>
+
+<p id="wynik"></p>
+
+<script>
+function sprawdzPesel() {
+    const pesel = document.getElementById("peselInput").value;
+    const wynik = document.getElementById("wynik");
+
+    if (pesel.length === 11) {
+        wynik.style.color = "green";
+        wynik.textContent = maskujPesel(pesel);
+    } else {
+        wynik.style.color = "red";
+        wynik.textContent = "Błąd";
+    }
+}
+
+function maskujPesel(pesel) {
+    const ostatnie4 = pesel.slice(-4);
+    return "*******" + ostatnie4;
+}
+</script>
+
+</body>
+</html>
