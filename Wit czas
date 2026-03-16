@@ -1,0 +1,127 @@
+<script>
+
+// 1. Obiekt z aktualną datą i godziną
+const teraz = new Date();
+console.log("Aktualna data:", teraz);
+
+// 2. Rok, miesiąc, dzień
+console.log("Rok:", teraz.getFullYear());
+console.log("Miesiąc:", teraz.getMonth() + 1); // +1 bo miesiące liczą się od 0
+console.log("Dzień:", teraz.getDate());
+
+// 3. Obiekt daty urodzin
+const urodziny = new Date(2000, 5, 15); // rok, miesiąc(0-11), dzień
+console.log("Moje urodziny:", urodziny);
+
+// 4. Wyświetlenie godziny
+const godzina = teraz.getHours();
+const minuty = teraz.getMinutes();
+console.log(`Jest godzina: ${godzina}:${minuty}`);
+
+// 5. Dzień tygodnia urodzin
+const dni = ["Niedziela","Poniedziałek","Wtorek","Środa","Czwartek","Piątek","Sobota"];
+console.log("Dzień tygodnia urodzin:", dni[urodziny.getDay()]);
+
+</script>
+
+
+<script>
+
+// 6. Funkcja dodająca 7 dni
+function dodaj7Dni(data) {
+    let nowa = new Date(data);
+    nowa.setDate(nowa.getDate() + 7);
+    return nowa;
+}
+
+console.log("Za 7 dni:", dodaj7Dni(new Date()));
+
+// 7. Polska data
+const dzisiaj = new Date();
+console.log(dzisiaj.toLocaleDateString("pl-PL"));
+
+// 8. Ile minut od początku dnia
+const startDnia = new Date();
+startDnia.setHours(0,0,0,0);
+
+const roznica = dzisiaj - startDnia;
+const minuty = Math.floor(roznica / 60000);
+
+console.log("Minut od północy:", minuty);
+
+// 9. Nazwa dzisiejszego dnia
+const dniTyg = ["niedziela","poniedziałek","wtorek","środa","czwartek","piątek","sobota"];
+
+const dzien = new Date().getDay();
+console.log("Dzisiaj jest", dniTyg[dzien]);
+
+</script>
+
+
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Ćwiczenia z datą</title>
+</head>
+<body>
+
+<h2 id="clock"></h2>
+
+<h3>Sprawdź ile dni do daty</h3>
+<input type="date" id="dateInput">
+<button onclick="sprawdzDate()">Sprawdź</button>
+<p id="wynik"></p>
+
+<script>
+
+// 10. Zegar cyfrowy
+function zegar() {
+    const now = new Date();
+
+    let h = now.getHours().toString().padStart(2,"0");
+    let m = now.getMinutes().toString().padStart(2,"0");
+    let s = now.getSeconds().toString().padStart(2,"0");
+
+    document.getElementById("clock").textContent = `${h}:${m}:${s}`;
+}
+
+setInterval(zegar, 1000);
+
+
+// 11. Kolor tła zależny od godziny
+function zmienTlo() {
+    const godz = new Date().getHours();
+
+    if(godz >= 6 && godz < 20){
+        document.body.style.background = "#f5f5f5";
+    } else {
+        document.body.style.background = "#222";
+        document.body.style.color = "white";
+    }
+}
+
+zmienTlo();
+
+
+// 12. Ile dni do wybranej daty
+function sprawdzDate(){
+
+    const input = document.getElementById("dateInput").value;
+    const wybrana = new Date(input);
+    const dzis = new Date();
+
+    const roznica = wybrana - dzis;
+
+    const dni = Math.ceil(roznica / (1000*60*60*24));
+
+    document.getElementById("wynik").textContent =
+        `Do tej daty zostało ${dni} dni`;
+
+}
+
+</script>
+
+</body>
+</html>
