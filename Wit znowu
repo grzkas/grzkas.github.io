@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Poziom 1</title>
+</head>
+<body>
+
+<h1>Poziom 1 - Podstawy</h1>
+
+<script>
+// 1
+const now = new Date();
+console.log("Teraz:", now);
+
+// 2
+console.log("Rok:", now.getFullYear());
+console.log("Miesiąc:", now.getMonth() + 1);
+console.log("Dzień:", now.getDate());
+
+// 3
+const birthday = new Date(2000, 0, 15);
+
+// 4
+const h = String(now.getHours()).padStart(2, "0");
+const m = String(now.getMinutes()).padStart(2, "0");
+console.log(`Jest godzina: ${h}:${m}`);
+
+// 5
+const days = ["Niedziela","Poniedziałek","Wtorek","Środa","Czwartek","Piątek","Sobota"];
+console.log("Dzień urodzenia:", days[birthday.getDay()]);
+</script>
+
+</body>
+</html>
+
+
+
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Poziom 2</title>
+</head>
+<body>
+
+<h1>Poziom 2</h1>
+
+<script>
+const now = new Date();
+
+// 6
+function add7Days(date) {
+  const d = new Date(date);
+  d.setDate(d.getDate() + 7);
+  return d;
+}
+console.log("Za 7 dni:", add7Days(now));
+
+// 7
+console.log("Data PL:", now.toLocaleDateString("pl-PL"));
+
+// 8
+function minutesSinceMidnight() {
+  return now.getHours() * 60 + now.getMinutes();
+}
+console.log("Minuty od północy:", minutesSinceMidnight());
+
+// 9
+const days = ["Niedziela","Poniedziałek","Wtorek","Środa","Czwartek","Piątek","Sobota"];
+console.log("Dzisiaj jest:", days[now.getDay()]);
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Poziom 3</title>
+</head>
+<body>
+
+<div id="clock"></div>
+
+<input type="date" id="date">
+<button onclick="calc()">OK</button>
+<p id="out"></p>
+
+<script>
+// zegar
+setInterval(() => {
+  const d = new Date();
+  clock.textContent = d.toLocaleTimeString();
+}, 1000);
+
+// tło
+document.body.style.background =
+  new Date().getHours() >= 20 ? "#111" : "#fff";
+
+// dni do daty
+function calc() {
+  const diff = new Date(date.value) - new Date();
+  out.textContent = Math.ceil(diff / 86400000) + " dni";
+}
+</script>
+
+</body>
+</html>
