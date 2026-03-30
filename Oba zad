@@ -71,3 +71,45 @@ document.getElementById("kolor").addEventListener("change", function() {
 
 </body>
 </html>
+
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Poziom 3</title>
+</head>
+<body>
+
+<form id="form">
+  <input type="text" id="email">
+  <input type="password" id="haslo1">
+  <input type="password" id="haslo2">
+  <button type="submit">Wyślij</button>
+</form>
+
+<p id="komunikat"></p>
+
+<script>
+document.getElementById("form").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const email = document.getElementById("email").value;
+  const haslo1 = document.getElementById("haslo1").value;
+  const haslo2 = document.getElementById("haslo2").value;
+  const komunikat = document.getElementById("komunikat");
+
+  if (haslo1 !== haslo2) {
+    komunikat.textContent = "Hasła nie są zgodne";
+    komunikat.style.color = "red";
+  }
+
+  if (!email.includes("@")) {
+    komunikat.textContent = "Niepoprawny e-mail";
+    komunikat.style.color = "red";
+  }
+});
+</script>
+
+</body>
+</html>
