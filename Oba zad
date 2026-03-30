@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Poziom 1</title>
+</head>
+<body>
+
+<form id="form">
+  <input type="text" id="tekst">
+  <input type="checkbox" id="check">
+  <button type="submit">Wyślij</button>
+</form>
+
+<script>
+document.getElementById("form").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const tekst = document.getElementById("tekst").value;
+  console.log(tekst);
+
+  const check = document.getElementById("check").checked;
+  console.log(check);
+});
+</script>
+
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Poziom 2</title>
+</head>
+<body>
+
+<input type="text" id="tekst">
+<p id="licznik"></p>
+
+<input type="password" id="haslo">
+
+<select id="kolor">
+  <option value="">Wybierz kolor</option>
+  <option value="red">Czerwony</option>
+  <option value="green">Zielony</option>
+  <option value="blue">Niebieski</option>
+</select>
+
+<script>
+// input – liczba znaków
+document.getElementById("tekst").addEventListener("input", function() {
+  document.getElementById("licznik").textContent = this.value.length;
+});
+
+// blur – sprawdzanie hasła
+document.getElementById("haslo").addEventListener("blur", function() {
+  if (this.value.length < 8) {
+    this.style.border = "2px solid red";
+  } else {
+    this.style.border = "";
+  }
+});
+
+// select – zmiana tła
+document.getElementById("kolor").addEventListener("change", function() {
+  document.body.style.background = this.value;
+});
+</script>
+
+</body>
+</html>
