@@ -115,3 +115,39 @@ function tryb() {
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Poziom 1</title>
+</head>
+<body>
+
+<button onclick="alert('Witaj!')" 
+onmouseover="this.style.backgroundColor='lightblue'" 
+onmouseout="this.style.backgroundColor=''">
+Kliknij mnie
+</button>
+
+<button onclick="zmienTekst(this)" 
+onmouseover="this.style.backgroundColor='lightblue'" 
+onmouseout="this.style.backgroundColor=''">
+Kliknij mnie 2
+</button>
+
+<script>
+function zmienTekst(btn) {
+    btn.innerText = "Zostałem kliknięty!";
+}
+</script>
+
+</body>
+</html>
