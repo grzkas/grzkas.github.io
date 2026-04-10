@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Poziom 1</title>
+<style>
+button:hover {
+    background-color: lightblue;
+}
+</style>
+</head>
+<body>
+
+<button onclick="alert('Witaj!')">Kliknij mnie</button>
+
+<button onclick="zmienTekst(this)">Kliknij mnie 2</button>
+
+<script>
+function zmienTekst(btn) {
+    btn.innerText = "Zostałem kliknięty!";
+}
+</script>
+
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Poziom 2</title>
+</head>
+<body>
+
+<p id="licznik">0</p>
+<button onclick="zwieksz()">+</button>
+<button onclick="reset()">Reset</button>
+
+<button id="blokuj" onclick="blokuj()">Zablokuj na 5s</button>
+
+<script>
+let liczba = 0;
+
+function zwieksz() {
+    liczba++;
+    document.getElementById("licznik").innerText = liczba;
+}
+
+function reset() {
+    liczba = 0;
+    document.getElementById("licznik").innerText = liczba;
+}
+
+function blokuj() {
+    let btn = document.getElementById("blokuj");
+    btn.disabled = true;
+
+    setTimeout(() => {
+        btn.disabled = false;
+    }, 5000);
+}
+</script>
+
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Poziom 3</title>
+<style>
+.dark-mode {
+    background-color: black;
+    color: white;
+}
+</style>
+</head>
+<body>
+
+<input type="text" id="input">
+<button onclick="dodaj()">Dodaj</button>
+
+<ul id="lista"></ul>
+
+<button onclick="tryb()">Przełącz tryb nocny</button>
+
+<script>
+function dodaj() {
+    let input = document.getElementById("input");
+    let li = document.createElement("li");
+
+    li.innerText = input.value;
+
+    let btn = document.createElement("button");
+    btn.innerText = "Usuń";
+    btn.onclick = function() {
+        li.remove();
+    };
+
+    li.appendChild(btn);
+    document.getElementById("lista").appendChild(li);
+
+    input.value = "";
+}
+
+function tryb() {
+    document.body.classList.toggle("dark-mode");
+}
+</script>
+
+</body>
+</html>
