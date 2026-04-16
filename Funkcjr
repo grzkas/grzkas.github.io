@@ -1,0 +1,27 @@
+# funkcje
+def suma(a, b):
+    return a + b
+
+def roznica(a, b):
+    return a - b
+
+def iloczyn(a, b):
+    return a * b
+
+def iloraz(a, b):
+    return a / b
+
+def reszta(a, b):
+    return a % b
+
+
+# pobranie danych
+a_kas = int(input("Podaj liczbe a: "))
+b_kas = int(input("Podaj liczbe b: "))
+
+# wyniki
+print("suma =", suma(a_kas, b_kas))
+print("roznica =", roznica(a_kas, b_kas))
+print("iloczyn =", iloczyn(a_kas, b_kas))
+print("iloraz = {:.2f}".format(iloraz(a_kas, b_kas)))
+print("reszta_z_dzielenia =", reszta(a_kas, b_kas))
