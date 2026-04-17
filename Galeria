@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<img id="img" src="https://via.placeholder.com/200" width="200">
+
+<br><br>
+
+<button onclick="changeImg()">Zmień zdjęcie</button>
+<button onclick="resetImg()">Reset</button>
+
+<script>
+let original = "https://via.placeholder.com/200";
+
+function changeImg() {
+  document.getElementById("img").src = "https://via.placeholder.com/200/ff0000";
+}
+
+function resetImg() {
+  document.getElementById("img").src = original;
+}
+</script>
+
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<img id="img" src="https://via.placeholder.com/200" width="200">
+
+<br><br>
+
+<button onclick="nextImg()">Następne</button>
+
+<script>
+let zdjecia = [
+  "https://via.placeholder.com/200",
+  "https://via.placeholder.com/200/ff0000",
+  "https://via.placeholder.com/200/00ff00"
+];
+
+let index = 0;
+
+function nextImg() {
+  index++;
+  document.getElementById("img").src = zdjecia[index];
+}
+</script>
+
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<img id="img" src="https://via.placeholder.com/200" width="200">
+
+<p id="counter"></p>
+
+<button onclick="prevImg()">Poprzednie</button>
+<button onclick="nextImg()">Następne</button>
+
+<script>
+let zdjecia = [
+  "https://via.placeholder.com/200",
+  "https://via.placeholder.com/200/ff0000",
+  "https://via.placeholder.com/200/00ff00",
+  "https://via.placeholder.com/200/0000ff",
+  "https://via.placeholder.com/200/ffff00"
+];
+
+let index = 0;
+
+function update() {
+  document.getElementById("img").src = zdjecia[index];
+  document.getElementById("counter").innerText = "Zdjęcie " + (index + 1) + " z " + zdjecia.length;
+}
+
+function nextImg() {
+  index++;
+  if (index >= zdjecia.length) index = 0;
+  update();
+}
+
+function prevImg() {
+  index--;
+  if (index < 0) index = zdjecia.length - 1;
+  update();
+}
+
+update();
+</script>
+
+</body>
+</html>
