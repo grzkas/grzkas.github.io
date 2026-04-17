@@ -2,7 +2,7 @@
 <html>
 <body>
 
-<img id="img" src="https://via.placeholder.com/200" width="200">
+<img id="img" src="https://picsum.photos/200" width="200">
 
 <br><br>
 
@@ -10,10 +10,10 @@
 <button onclick="resetImg()">Reset</button>
 
 <script>
-let original = "https://via.placeholder.com/200";
+let original = "https://picsum.photos/200";
 
 function changeImg() {
-  document.getElementById("img").src = "https://via.placeholder.com/200/ff0000";
+  document.getElementById("img").src = "https://picsum.photos/200?random=1";
 }
 
 function resetImg() {
@@ -29,7 +29,7 @@ function resetImg() {
 <html>
 <body>
 
-<img id="img" src="https://via.placeholder.com/200" width="200">
+<img id="img" src="https://picsum.photos/200?random=1" width="200">
 
 <br><br>
 
@@ -37,9 +37,9 @@ function resetImg() {
 
 <script>
 let zdjecia = [
-  "https://via.placeholder.com/200",
-  "https://via.placeholder.com/200/ff0000",
-  "https://via.placeholder.com/200/00ff00"
+  "https://picsum.photos/200?random=1",
+  "https://picsum.photos/200?random=2",
+  "https://picsum.photos/200?random=3"
 ];
 
 let index = 0;
@@ -58,7 +58,7 @@ function nextImg() {
 <html>
 <body>
 
-<img id="img" src="https://via.placeholder.com/200" width="200">
+<img id="img" src="https://picsum.photos/200?random=1" width="200">
 
 <p id="counter"></p>
 
@@ -67,11 +67,11 @@ function nextImg() {
 
 <script>
 let zdjecia = [
-  "https://via.placeholder.com/200",
-  "https://via.placeholder.com/200/ff0000",
-  "https://via.placeholder.com/200/00ff00",
-  "https://via.placeholder.com/200/0000ff",
-  "https://via.placeholder.com/200/ffff00"
+  "https://picsum.photos/200?random=1",
+  "https://picsum.photos/200?random=2",
+  "https://picsum.photos/200?random=3",
+  "https://picsum.photos/200?random=4",
+  "https://picsum.photos/200?random=5"
 ];
 
 let index = 0;
