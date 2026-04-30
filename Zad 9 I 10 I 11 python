@@ -21,3 +21,19 @@ y = int(input("proszę wpisać liczbę y: "))
 
 wynik = wieksza(x, y)
 print("Liczba większa to", wynik)
+
+zad11
+def dzien_tygodnia(x):
+    # Sprawdzamy, czy x jest większe lub równe 1 ORAZ mniejsze lub równe 7
+    if x >= 1 and x <= 7:
+        return True
+    else:
+        return False
+
+# Część sprawdzająca (zgodna z przykładem na obrazku):
+try:
+    liczba = int(input("Podaj liczbę od 1 do 7: "))
+    print(dzien_tygodnia(liczba))
+except ValueError:
+    print("To nie jest liczba!")
+
