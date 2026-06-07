@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undertale Info Board</title>
+    <style>
+        /* --- Core Layout & Reset --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url('UndertaleBG.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: #0d0d0d; /* Fallback */
+            color: #ffffff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+         .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(11, 11, 17, 0.95);
+            padding: 20px 40px;
+            border-bottom: 1px solid rgba(81, 81, 90, 0.95);
+            position: fixed;
+            opacity: 90%;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .navbar .logo { 
+            font-size: 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ffffff;
+        }
+
+        .navbar .nav-links a {
+            color: #c9c9c9;
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .navbar .nav-links a:hover {
+            color: #ffffff;
+        }
+
+        /* --- Main Dashboard Container --- */
+        .dashboard {
+            margin-top: 60px; /* Accounts for header */
+            display: flex;
+            padding: 20px;
+            gap: 20px;
+            height: calc(100vh - 60px);
+            overflow-x: auto; /* Allows horizontal scrolling like Trello */
+            align-items: flex-start;
+        }
+
+        /* --- Leftmost Column (Sidebar) --- */
+        .left-sidebar {
+            width: 260px;
+            min-width: 260px;
+            background-color: rgba(15, 15, 15, 0.75);
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .sidebar-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Card / Button Styles with Fog effect */
+        .fog-card {
+            position: relative;
+            width: 100%;
+            border-radius: 6px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .fog-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .fog-card.square-img {
+            aspect-ratio: 1 / 1;    
+            background-color: #2a2a2a; 
+            background-size: cover;
+        }
+
+        .fog-card.rectangular-img {
+            aspect-ratio: 16 / 9;
+            background-color: #2a2a2a;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .fog-card.rect-btn {
+            height: 45px;
+            background-color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Black Fog Overlay */
+        .fog-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%);
+            display: flex;
+            align-items: flex-end;
+            padding: 10px;
+        }
+
+        .rect-btn .fog-overlay {
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(20, 20, 20, 0.4));
+        }
+
+        .card-text {
+            font-size: 14px;
+            font-weight: 600;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+        }
+
+        .spacer-line {
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 4px 0;
+        }
+
+        /* --- Board Columns (Right Side) --- */
+        .board-column {
+            width: 280px;
+            min-width: 280px;
+            background-color: rgba(20, 20, 20, 0.65);
+            border-radius: 8px;
+            max-height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 12px;
+            gap: 10px;
+            overflow-y: auto;
+            border-top: 3px solid #333;
+        }
+
+        /* Column Color Accents matching Themes */
+        .column-survival { border-top-color: #b81d1d; }
+        .column-creative { border-top-color: #f3ef0d; }
+        .column-redstone { border-top-color: #ffffff; }
+        .column-multiplayer { border-top-color: #2a83de; }
+        .column-modding { border-top-color: #8c2ade; }
+
+        .column-header {
+            font-size: 15px;
+            font-weight: bold;
+            padding: 4px 2px;
+            color: #ddd;
+        }
+
+        /* --- Pop-up Modal Window --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%; 
+            background-color: rgba(0, 0, 0, 0.85); 
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; 
+            padding-top: 100px; 
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            overflow-y: auto; 
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-box {
+            width: 1000px;
+            max-width: 90%;
+            background-color: #181818;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+        }
+
+        .modal-banner {
+            width: 100%;
+            height: 250px;
+            background-color: #333;
+            background-image: url('placeholder-banner.png');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-body {
+            padding: 25px;
+        }
+
+        .modal-title {
+            font-size: 22px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .modal-desc {
+            color: #b3b3b3;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Custom Scrollbar for columns */
+        .board-column::-webkit-scrollbar {
+            width: 6px;
+        }
+        .board-column::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.15);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">Undertale Database</div>
+        <div class="nav-links">
+            <a href="Main.html">Back</a>
+            <a>Log in</a>
+            <a>Help</a>
+            <a>Contact</a>
+        </div>
+    </nav>
+
+    <main class="dashboard">
+
+        <!-- Left Sidebar Section -->
+        <div class="left-sidebar">
+            <div class="sidebar-title">Main Dashboard</div>
+            
+            <div class="fog-card square-img" onclick="openModal('About Undertale', 'Welcome to the core sandbox information board. Dive into world exploration, mechanical automation, custom engineering, and community networks.')" style="background-image: url('UndertaleAbout.jpg');">
+                <div class="fog-overlay">
+                    <div class="card-text">About Undertale</div>
+                </div>
+            </div>
+
+            <div class="spacer-line"></div>
+
+            <div class="fog-card rect-btn" onclick="openModal('Community Hubs & Links', 'undertale.wiki - Wikipedia Undertale,<br>undertale.com - Oficialna strona Undertale')">
+                <div class="fog-overlay">
+                    <div class="card-text">Community Links</div>
+                </div>
+            </div>
+
+            <div class="spacer-line"></div>
+
+            <div class="fog-card rect-btn" onclick="openModal('Info Board Credits', '- Szymon Próchniewicz<br>- Olaf Mickiewicz<br>- Grzegorz Kasubowski')">
+                <div class="fog-overlay">
+                    <div class="card-text">Credits</div>
+                </div>
+            </div>
+
+            
+        </div>
+
+        <!-- Column 1: Survival & Progression -->
+        <div class="board-column column-survival">
+            <div class="column-header">Gameplay & Combat Systems</div>
+            
+             <div class="fog-card rectangular-img" onclick="openModal('UI', 'W naszym interface widzimy:<br>Swoje imię<br>LV<br>HP<br>Attack<br>Act<br>Item<br>Mercy')" style="background-image: url('UndertaleUi.png');">
+                <div class="fog-overlay">
+                    <div class="card-text">UI</div>
+                </div>
+            </div>
+
+            <div class="spacer-line"></div>
+            
+            <div class="fog-card rect-btn" onclick="openModal('Mechanika duszy', 'Podczas walki dusza gracza jest reprezentowana jako czerwone serce, które porusza się po określonym obszarze. Gracz musi unikać ataków przeciwnika, które mogą przyjmować różne formy, takie jak pociski, przeszkody lub inne zagrożenia.')">
+                <div class="fog-overlay"><div class="card-text">Mechanika duszy</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Mercy & Act', 'Poprzez wybranie opcji <b>Act</b> w menu walki, gracz może próbować różnych interakcji z przeciwnikiem, takich jak rozmowa, tańczenie, czy inne unikalne akcje. Celem jest znalezienie sposobu na zakończenie walki bez konieczności atakowania przeciwnika.')">
+                <div class="fog-overlay"><div class="card-text">Mercy & Act</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Statystiki & kalkulacje', 'Attack gracza jest obliczany na podstawie jego LV (Level of Violence) tak sami jest obliczane jego HP (Health Points). Im wyższy LV, tym większe obrażenia zadaje gracz, ale jednocześnie jest bardziej podatny na ataki przeciwnika. HP gracza określa, ile obrażeń może otrzymać, zanim zostanie pokonany.')">
+                <div class="fog-overlay"><div class="card-text">Statystiki & kalkulacje</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Items & Equipment', 'Zestawienie broni i pancerzy. Opis ich unikalnych właściwości modyfikujących mechanikę (np. Torn Notebook zwiększający czas nieśmiertelności po otrzymaniu ciosu, czy Burnt Pan zwiększający leczenie z jedzenia).')">
+                <div class="fog-overlay"><div class="card-text">Items & Equipment</div></div>
+            </div>
+            
+        </div>
+
+        <!-- Column 2: Creative & Architecture -->
+        <div class="board-column column-creative">
+            <div class="column-header">Fabuła & Zakończenie</div>
+
+             <div class="fog-card rectangular-img" onclick="openModal('Fabuła', 'Gracz jest dzieckiem, które spada do podziemia eksploruje je i napotyka potwory które poznaje lub zabija podczas proby wydostania sie z podziemia.')" style="background-image: url('UndertaleF&B.png');">
+                <div class="fog-overlay">
+                    <div class="card-text">Fabuła</div>
+                </div>
+            </div>
+
+            <div class="spacer-line"></div>
+            
+            <div class="fog-card rect-btn" onclick="openModal('Zakończenie Neutralne', 'Dostajemy je po zabiciu co najmniej 1 potwora ale nie wszystkich jest to najczęściej spotykane zakończenie w pierwszym przejsciu gry.')">
+                <div class="fog-overlay"><div class="card-text">Zakończenie Neutralne</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Zakończenie Pacyfistyczne', 'Dostajemy je po nie zabiciu żadnego potwora.')">
+                <div class="fog-overlay"><div class="card-text">Zakończenie Pacyfistyczne</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Zakończenie Agresywne', 'Dostajemy je po zabiciu wszystkich potworów, podczas tego zakonczenia gameplay i fabuła mocno się zmieniają.')">
+                <div class="fog-overlay"><div class="card-text">Zakończenie Agresywne</div></div>
+            </div>
+        
+        </div>
+
+        <!-- Column 3: Redstone & Automation -->
+        <div class="board-column column-redstone">
+            <div class="column-header">Regiony & Lokacje</div>
+
+             <div class="fog-card rectangular-img" onclick="openModal('Eksploracja', 'Podczas eksploracji gracza odkrywa różne regiony i lokacje w podziemiach w którychnapotyka rózne potwory .')" style="background-image: url('UndertaleR&L.png');">
+                <div class="fog-overlay">
+                    <div class="card-text">Eksploracja</div>
+                </div>
+            </div>
+
+            <div class="spacer-line"></div>
+            
+            <div class="fog-card rect-btn" onclick="openModal('The Ruins', 'The Ruins to pierwsza lokacja o wyglądzie fioletowych podziemnych ruin, w której gracz uczy się podstawowych mechanik gry, takich jak poruszanie się, interakcja z przedmiotami, walka i rozwiązywanie puzzli')">
+                <div class="fog-overlay"><div class="card-text">The Ruins</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Snowdin Forest & Town', 'Snowdin Forest & Town to druga lokacja, w której gracz odkrywa pokryte śniegiem las i miasto, gdzie poznaje nowych postaci, rozwiązuje zagadki, i walczy z 1 bossem, lokacja ta w większości skupia sie na rozwiązywaniu zagadek.')">
+                <div class="fog-overlay"><div class="card-text">Snowdin Forest & Town</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Waterfall', 'Waterfall to trzecia lokacja, która składa się w większości z jaskiń i wodospadów, głównie skupiamy sie tam bardziej na walce niż na poznawainu postaci walczymy tutaj z 2 bossami.')">
+                <div class="fog-overlay"><div class="card-text">Waterfall</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Hotland & The CORE', 'Hotland & The CORE to czwarta lokacja, jest to rejon pełen zagadek jak i potworów, składa sie ona z 3 sekwencji w kazdej z nich walczymy z tym samym bossem ale w kazdej sekwencji jest on inny.')">
+                <div class="fog-overlay"><div class="card-text">Hotland & The CORE</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('New Home', 'New Home to piąta i ostatnia lokacja, jest to miejsce w którym czytamy więcej dialogów niż walczymy czy rozwiązujemy zagadki, walczymy tutaj z finałowym bossem.')">
+                <div class="fog-overlay"><div class="card-text">New Home</div></div>
+            </div>
+        </div>
+
+        
+    </main>
+
+    <!-- Modal Element Popup Context -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <div class="modal-banner">
+                <button class="modal-close" onclick="closeModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-title" id="modalTitle">Topic Title</div>
+                <div class="modal-desc" id="modalDesc">Detailed data context gets loaded dynamically here.</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const overlay = document.getElementById('modalOverlay');
+        const titleElem = document.getElementById('modalTitle');
+        const descElem = document.getElementById('modalDesc');
+
+        function openModal(title, description) {
+            titleElem.innerHTML = title;
+            descElem.innerHTML = description;
+            overlay.classList.add('active');
+        }
+
+        function closeModal() {
+            overlay.classList.remove('active');
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GTAV Info Board</title>
+    <style>
+        /* --- Core Layout & Reset --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url('GTAVBG.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: #0d0d0d; /* Fallback */
+            color: #ffffff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+         .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(48, 15, 5, 0.95);
+            padding: 20px 40px;
+            border-bottom: 1px solid rgba(81, 81, 90, 0.95);
+            position: fixed;
+            opacity: 90%;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .navbar .logo { 
+            font-size: 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ffffff;
+        }
+
+        .navbar .nav-links a {
+            color: #c9c9c9;
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .navbar .nav-links a:hover {
+            color: #ffffff;
+        }
+
+        /* --- Main Dashboard Container --- */
+        .dashboard {
+            margin-top: 60px; /* Accounts for header */
+            display: flex;
+            padding: 20px;
+            gap: 20px;
+            height: calc(100vh - 60px);
+            overflow-x: auto; /* Allows horizontal scrolling like Trello */
+            align-items: flex-start;
+        }
+
+        /* --- Leftmost Column (Sidebar) --- */
+        .left-sidebar {
+            width: 260px;
+            min-width: 260px;
+            background-color: rgba(15, 15, 15, 0.75);
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .sidebar-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Card / Button Styles with Fog effect */
+        .fog-card {
+            position: relative;
+            width: 100%;
+            border-radius: 6px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .fog-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .fog-card.square-img {
+            aspect-ratio: 1 / 1;    
+            background-color: #2a2a2a; 
+            background-size: cover;
+        }
+
+        .fog-card.rectangular-img {
+            aspect-ratio: 16 / 9;
+            background-color: #2a2a2a;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .fog-card.rect-btn {
+            height: 45px;
+            background-color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Black Fog Overlay */
+        .fog-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%);
+            display: flex;
+            align-items: flex-end;
+            padding: 10px;
+        }
+
+        .rect-btn .fog-overlay {
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(20, 20, 20, 0.4));
+        }
+
+        .card-text {
+            font-size: 14px;
+            font-weight: 600;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+        }
+
+        .spacer-line {
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 4px 0;
+        }
+
+        /* --- Board Columns (Right Side) --- */
+        .board-column {
+            width: 280px;
+            min-width: 280px;
+            background-color: rgba(20, 20, 20, 0.65);
+            border-radius: 8px;
+            max-height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 12px;
+            gap: 10px;
+            overflow-y: auto;
+            border-top: 3px solid #333;
+        }
+
+        /* Column Color Accents matching Themes */
+        .column-survival { border-top-color: #2841ad; }
+        .column-creative { border-top-color: #b93131; }
+        .column-redstone { border-top-color: #149454; }
+        .column-multiplayer { border-top-color: #464545; }
+        .column-modding { border-top-color: #5e9e96; }
+
+        .column-header {
+            font-size: 15px;
+            font-weight: bold;
+            padding: 4px 2px;
+            color: #ddd;
+        }
+
+        /* --- Pop-up Modal Window --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%; 
+            background-color: rgba(0, 0, 0, 0.85); 
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; 
+            padding-top: 100px; 
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            overflow-y: auto; 
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-box {
+            width: 1000px;
+            max-width: 90%;
+            background-color: #181818;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+        }
+
+        .modal-banner {
+            width: 100%;
+            height: 250px;
+            background-color: #333;
+            background-image: url('placeholder-banner.png');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-body {
+            padding: 25px;
+        }
+
+        .modal-title {
+            font-size: 22px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .modal-desc {
+            color: #b3b3b3;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Custom Scrollbar for columns */
+        .board-column::-webkit-scrollbar {
+            width: 6px;
+        }
+        .board-column::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.15);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">GTAV Database</div>
+        <div class="nav-links">
+            <a href="Main.html">Back</a>
+            <a>Log in</a>
+            <a>Help</a>
+            <a>Contact</a>
+        </div>
+    </nav>
+
+    <main class="dashboard">
+
+        <!-- Left Sidebar Section -->
+        <div class="left-sidebar">
+            <div class="sidebar-title">Main Dashboard</div>
+            
+            <div class="fog-card square-img" onclick="openModal('O GTAV', 'Silnik gry: RAGE (Rockstar Advanced Game Engine).<br>Data premiery: 17 września 2013 (PS3/X360), wersja PC: 14 kwietnia 2015.<br>Miejsce akcji: miasto Los Santos.<br>')" style="background-image: url('GTAVAbout.png');">
+                <div class="fog-overlay">
+                    <div class="card-text">O GTAV</div>
+                </div>
+            </div>
+
+            <div class="spacer-line"></div>
+
+            <div class="fog-card rect-btn" onclick="openModal('Community Hubs & Links', 'Oficjalny portal społecznościowy: socialclub.rockstargames.com<br>Zgłaszanie błędów i pomoc techniczna: support.rockstargames.com')">
+                <div class="fog-overlay">
+                    <div class="card-text">Community Links</div>
+                </div>
+            </div>
+
+            <div class="spacer-line"></div>
+
+            <div class="fog-card rect-btn" onclick="openModal('Info Board Credits', '- Szymon Próchniewicz<br>- Olaf Mickiewicz<br>- Grzegorz Kasubowski')">
+                <div class="fog-overlay">
+                    <div class="card-text">Credits</div>
+                </div>
+            </div>
+
+            
+        </div>
+
+        <!-- Column 1: Survival & Progression -->
+        <div class="board-column column-survival">
+            <div class="column-header">Mapa & Lokacje</div>
+            
+             <div class="fog-card rectangular-img" onclick="openModal('Mapa', 'Powierzchnia mapy: Około 81 kilometrów kwadratowych (wliczając akweny wodne).<br>Podział strukturalny:<br>- Los Santos: Gęsto zaludniona aglomeracja miejska (podzielona na dzielnice takie jak Vinewood, Rockford Hills, South Los Santos).<br>- Blaine County: Tereny północne, słabo zaludnione, obejmujące pustynię Grand Senora, góry oraz jezioro Alamo Sea.')" style="background-image: url('GTAVMap.jpg');">
+                <div class="fog-overlay">
+                    <div class="card-text">Mapa</div>
+                </div>
+            </div>
+
+            <div class="spacer-line"></div>
+            
+            <div class="fog-card rect-btn" onclick="openModal('Interior', 'System instancji: Gra wykorzystuje zaawansowany system ładowania wnętrz budynków (IPL). Większość zaawansowanych wnętrz (np. domy bohaterów, sejfy bankowe) jest schowana pod teksturami mapy i ładowana tylko podczas konkretnych misji lub za pomocą modów typu Open All Interiors.')">
+                <div class="fog-overlay"><div class="card-text">Interior</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Kluczowe strefy', '- Fort Zancudo: Silnie strzeżona baza wojskowa. Wkroczenie na jej teren bez uprawnień skutkuje natychmiastowym uzyskaniem 4 gwiazdek poszukiwania. Miejsce pozyskania myśliwca P-996 Lazer.<br>- Bolingbroke Penitentiary: Stanowe więzienie zlokalizowane na pustyni.<br>- Humane Labs and Research: Tajny ośrodek badawczy na wschodnim wybrzeżu.')">
+                <div class="fog-overlay"><div class="card-text">Kluczowe strefy</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Góry', 'Trzy główne pasma górskie na mapie:<br>- Mount Chiliad: Najwyższy szczyt w grze (stacja kolejki linowej, miejsce kultowych teorii i sekretów).<br>- Mount Josiah: Góra sąsiadująca z bazą wojskową Fort Zancudo.<br>- Mount Gordo: Miejsce występowania easter egga z duchem Jolene Cranley-Evans (pojawia się między 23:00 a 0:00).')">
+                <div class="fog-overlay"><div class="card-text">Góry</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Ocean', '- Głębokość oceanu: Mapa jest otoczona głębokim oceanem, w którym odległe wypłynięcie skutkuje atakiem rekinów i zniszczeniem łodzi.<br>- Dno morskie: W pełni wymodelowane 3D. Zawiera unikalne obiekty ukryte: wraki statków, zatopiony okręt podwodny, części statku kosmicznego oraz rzadkie paczki z gotówką (Hidden Packages).')">
+                <div class="fog-overlay"><div class="card-text">Ocean</div></div>
+            </div>
+        </div>
+
+        <!-- Column 2: Creative & Architecture -->
+        <div class="board-column column-creative">
+            <div class="column-header">Protagoniści  Bronie</div>
+
+             <div class="fog-card rectangular-img" onclick="openModal('Statystyki', '- Stamina: Każde przebiegnięte 17 metrów lub 1 minuta pływania zwiększa statystykę o 1%.<br>- Shooting: Trafienia w głowę (Headshots) oraz zaliczanie wyzwań na strzelnicy Ammu-Nation na złoty medal.<br>- Lung Capacity: Każda 1 minuta spędzona pod wodą bez maski tlenowej zwiększa pojemność płuc.')" style="background-image: url('GTAVP&B.jpg');">
+                <div class="fog-overlay">
+                    <div class="card-text">Statystyki</div>
+                </div>
+            </div>
+
+            <div class="spacer-line"></div>
+            
+            <div class="fog-card rect-btn" onclick="openModal('Michael De Santa', '- Zdolność specjalna: Area Kill – spowolnienie czasu (Bullet Time) podczas poruszania się pieszo, ułatwiające precyzyjne celowanie w głowę.<br>- Cechy startowe: Najwyższy poziom umiejętności strzeleckich (Shooting), średnia kondycja.')">
+                <div class="fog-overlay"><div class="card-text">Michael De Santa</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Franklin Clinton', '- Zdolność specjalna: Driving Focus – spowolnienie czasu podczas prowadzenia dowolnego pojazdu kołowego. Zwiększa przyczepność pojazdu i pozwala na pokonywanie ostrych zakrętów bez utraty prędkości.<br>- Cechy startowe: Maksymalna statystyka jazdy (Driving), wysoka siła.')">
+                <div class="fog-overlay"><div class="card-text">Franklin Clinton</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Trevor Philips', '- Zdolność specjalna: Red Mist – zadaje 2x większe obrażenia z broni palnej i białej oraz otrzymuje o 50% mniejsze obrażenia od przeciwników i upadków.<br>- Cechy startowe: Najwyższa statystyka pilotażu (Flying), maksymalna agresja fizyczna.')">
+                <div class="fog-overlay"><div class="card-text">Trevor Philips</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Bronie', 'Kategorie uzbrojenia w kole wyboru (Weapon Wheel):<br>- Melee (Broń biała): Pałka policyjna, nóż, topór, młotek.<br>- Handguns (Pistolety): AP Pistol (najlepsza broń do strzelania z auta), Heavy Pistol.<br>- Submachine Guns: Micro SMG, Combat PDW.,br>- Assault Rifles: Special Carbine (najbardziej zbalansowany karabin), Advanced Rifle.<br>- Shotguns: Assault Shotgun (bardzo wysoka szybkostrzelność).')">
+                <div class="fog-overlay"><div class="card-text">Bronie</div></div>
+            </div>
+        </div>
+
+        <!-- Column 3: Redstone & Automation -->
+        <div class="board-column column-redstone">
+            <div class="column-header">Ekonomia & Wanted</div>
+
+             <div class="fog-card rectangular-img" onclick="openModal('About Redstone & Automation', '- Mechanika stożka wzroku (Line of Sight): Ikony policji na minimapie pulsują na czerwono-niebiesko, gdy gracz jest widziany. Gdy zniknie z pola widzenia, gwiazdki zaczynają migać.<br>- Strategia: Ukrywanie się w ciemnych alejkach, zmiana pojazdu w miejscu niewidocznym dla policji (zmniejsza promień poszukiwań o połowę) lub wjazd do warsztatu Los Santos Customs w celu przemalowania auta (natychmiastowe usunięcie pościgu do 4 gwiazdek).')" style="background-image: url('GTAVW.jpg');">
+                <div class="fog-overlay">
+                    <div class="card-text">Gubienie pościgu</div>
+                </div>
+            </div>
+
+            <div class="spacer-line"></div>
+            
+            <div class="fog-card rect-btn" onclick="openModal('Nieruchomości', '- Mechanika: Każdy z bohaterów może kupować określone biznesy na mapie (np. Los Santos Customs, McKenzie Field Hangar, kina, bary).<br>- Przychód: Zakupione nieruchomości generują stały tygodniowy dochód (Weekly Income) wysyłany na konto bohatera, oraz odblokowują unikalne misje poboczne dla menedżerów.')">
+                <div class="fog-overlay"><div class="card-text">Nieruchomości</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Giełda', '- LCN (Liberty City National): Giełda offline, na którą wpływ mają wyłącznie działania gracza w kampanii.<br>- BAWSAQ: Giełda online synchronizowana globalnie przez Social Club (zależna od zachowań wszystkich graczy).<br>- Optymalizacja zarobków: Misje zabójstw Lestera (Lesters Assassinations) należy zostawić na sam koniec gry. Inwestowanie całego kapitału trzech postaci (po finałowym napadzie) w akcje firm przed i po misjach Lestera pozwala na pomnożenie gotówki do ponad 2 miliardów dolarów na postać.')">
+                <div class="fog-overlay"><div class="card-text">Giełda</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('System Poszukiwania', '- 1 Gwiazdka: Policja próbuje aresztować gracza, jeśli ten nie stawia oporu. Strzelają tylko w ostateczności.<br>- 2 Gwiazdki: Policja strzela bez ostrzeżenia, agresywnie taranuje pojazd gracza.<br>- 3 Gwiazdki: Do akcji wkracza helikopter policyjny (Maverick), na drogach pojawiają się blokady (Roadblocks), policjanci zrzucają kolczatki.<br>- 4 Gwiazdki: Interwencja jednostek NOOSE (odpowiednik SWAT). Agresywne opancerzone vany (Riot), agenci strzelają z karabinów automatycznych.<br>- 5 Gwiazdek: Maksymalny poziom. Pełna blokada miasta, wojskowe wsparcie logistyczne, ciągła pogoń wielu helikopterów.')">
+                <div class="fog-overlay"><div class="card-text">System Poszukiwania</div></div>
+            </div>
+            
+        </div>
+
+        <!-- Column 4: Multiplayer & Community -->
+        <div class="board-column column-multiplayer">
+            <div class="column-header">Napady i Misje</div>
+
+             <div class="fog-card rectangular-img" onclick="openModal('Napady', 'Struktura głównych napadów w grze (Story Mode Heists):<br>- The Jewel Store Job (Napad na jubilera)<br>- The Merryweather Heist (Skok na Merryweather)<br>- The Paleto Score (Skok w Paleto Bay - użycie ciężkich pancerzy balistycznych)<br>- The Bureau Raid (Infiltracja wieżowca FIB)<br>- The Big Score (Wielki Finał - napad na Rezerwę Federalną Unii)')" style="background-image: url('GTAVN.jpg');">
+                <div class="fog-overlay">
+                    <div class="card-text">Napady</div>
+                </div>
+            </div>
+
+            <div class="spacer-line"></div>
+            
+            <div class="fog-card rect-btn" onclick="openModal('Dobór ekipy', '- Mechanika: Przed każdym napadem gracz wybiera kierowców, strzelców i hakerów.<br>- Zależność doświadczenia: Wybranie tańszego, niedoświadczonego członka ekipy (np. słaby strzelec) zmniejsza koszt procentowy, ale może skutkować jego śmiercią podczas akcji i utratą części łupu. Jeśli przeżyje, jego statystyki rosną na kolejny napad, zachowując niską stawkę.')">
+                <div class="fog-overlay"><div class="card-text">Dobór ekipy</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Zdarzenia losowe', '- Na mapie wygenerowano 60 losowych zdarzeń (oznaczanych niebieskimi lub czerwonymi kropkami na radarze).<br>- Przykłady: Napady na przechodniów, ucieczki przed policją, autostopowicze. Uratowanie niektórych postaci (np. Packie McReary) odblokowuje ich jako doświadczonych i tanich członków ekipy do późniejszych napadów.')">
+                <div class="fog-overlay"><div class="card-text">Zdarzenia losowe</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Nieznajomi i dziwacy', '- Misje poboczne oznaczane znakiem zapytania `?` na mapie, unikalne dla konkretnych postaci.<br>- Mary-Ann: Wyścigi triatlonowe dla wszystkich postaci.<br>- Omega: Franklin zbiera 50 części statku kosmicznego (Spaceship Parts), odblokowując unikalny pojazd Space Docker.<br>- Leonora Johnson: Zbieranie 50 skrawków listu (Letter Scraps) w celu rozwiązania zagadki morderstwa aktorki.')">
+                <div class="fog-overlay"><div class="card-text">Nieznajomi i dziwacy</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Wymagania na złoto', 'Każda misja główna i poboczna posiada ukryte wyzwania sekwencyjne wymagane do zdobycia Złotego Medalu. Obejmują one:<br>- Time: Ukończenie misji poniżej określonego czasu.<br>- Accuracy: Celność strzelania powyżej np. 70%.<br>- Headshots: Zabicie określonej liczby wrogów strzałem w głowę.<br>- Unmarked: Ukończenie misji bez odniesienia poważnych obrażeń.')">
+                <div class="fog-overlay"><div class="card-text">Wymagania na złoto</div></div>
+            </div>
+        </div>
+
+        <!-- Column 5: Modding & Technical Customization -->
+        <div class="board-column column-modding">
+            <div class="column-header">Narzędzia PC i Mody</div>
+
+             <div class="fog-card rectangular-img" onclick="openModal('The Chiliad Mystery & Datamining', '- Analiza kodu: Przez lata społeczność przeszukiwała pliki skryptów gry (`.yct`, `.ymt`) w poszukiwaniu ukrytego kodu powiązanego z muralem na Mount Chiliad i UFO.<br>- Wynik: Datamining ujawnił, że większość sekretów (np. działający Jetpack czy misje z kosmitami) została wycięta z trybu fabularnego i zaimplementowana w późniejszych aktualizacjach kodu sieciowego dla GTA Online (np. Doomsday Heist).')" style="background-image: url('GTAVMod.png');">
+                <div class="fog-overlay">
+                    <div class="card-text">The Chiliad Mystery & Datamining</div>
+                </div>
+            </div>
+
+            <div class="spacer-line"></div>
+            
+            <div class="fog-card rect-btn" onclick="openModal('OpenIV Tool Tutorial', '- Zastosowanie: Podstawowy program deweloperski / edytor archiwów służący do modyfikowania plików `.rpf` w grze GTA V.<br>- Bezpieczeństwo: Narzędzie wymaga stworzenia dedykowanego folderu `mods` w katalogu głównym gry, aby nie nadpisywać oryginalnych plików sieciowych i uniknąć bana w GTA Online.')">
+                <div class="fog-overlay"><div class="card-text">OpenIV Tool Tutorial</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Script Hook V & Community Script Hook V .NET', '- Script Hook V: Biblioteka autorstwa Alexandra Bladea pozwalająca na uruchamianie niestandardowych skryptów .asi<br>- SHVDN (.NET): Wtyczka umożliwiająca grze wykonywanie skryptów napisanych w językach wysokiego poziomu (C# oraz VB.NET) umieszczanych w folderze `scripts`')">
+                <div class="fog-overlay"><div class="card-text">Script Hook V & Community Script Hook V .NET</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Graphics Mods (NVE & QuantV)', '- NaturalVision Evolved (NVE) / QuantV: Zaawansowane modyfikacje graficzne całkowicie przebudowujące system pogodowy (Weather System), oświetlenie wolumetryczne, refleksy na pojazdach oraz tekstury dróg i roślinności. Wykorzystują systemy ENB Series oraz ReShade do emulacji Ray Tracingu.')">
+                <div class="fog-overlay"><div class="card-text">Quality-of-Life & Performance Mods</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('LSPD First Response (LSPDFR)', '- Najpopularniejsza modyfikacja totalna (Total Conversion) na PC. Zmienia grę w zaawansowany symulator policjanta. Gracz uzyskuje dostęp do komisariatów, radiowozów, komputera policyjnego, przeprowadzania kontroli drogowych, aresztowań oraz reagowania na zgłoszenia dyżurnego.')">
+                <div class="fog-overlay"><div class="card-text">Custom Map Making & Coding</div></div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Modal Element Popup Context -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <div class="modal-banner">
+                <button class="modal-close" onclick="closeModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-title" id="modalTitle">Topic Title</div>
+                <div class="modal-desc" id="modalDesc">Detailed data context gets loaded dynamically here.</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const overlay = document.getElementById('modalOverlay');
+        const titleElem = document.getElementById('modalTitle');
+        const descElem = document.getElementById('modalDesc');
+
+        function openModal(title, description) {
+            titleElem.innerHTML = title;
+            descElem.innerHTML = description;
+            overlay.classList.add('active');
+        }
+
+        function closeModal() {
+            overlay.classList.remove('active');
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+</body>
+</html>

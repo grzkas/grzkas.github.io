@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Info Board</title>
+    <style>
+        /* --- Core Layout & Reset --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url('MCBG(1).png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: #0d0d0d; /* Fallback */
+            color: #ffffff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+         .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(49, 46, 29, 0.95);
+            padding: 20px 40px;
+            border-bottom: 1px solid rgba(81, 81, 90, 0.95);
+            position: fixed;
+            opacity: 90%;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .navbar .logo { 
+            font-size: 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ffffff;
+        }
+
+        .navbar .nav-links a {
+            color: #c9c9c9;
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .navbar .nav-links a:hover {
+            color: #ffffff;
+        }
+
+        /* --- Main Dashboard Container --- */
+        .dashboard {
+            margin-top: 60px; /* Accounts for header */
+            display: flex;
+            padding: 20px;
+            gap: 20px;
+            height: calc(100vh - 60px);
+            overflow-x: auto; /* Allows horizontal scrolling like Trello */
+            align-items: flex-start;
+        }
+
+        /* --- Leftmost Column (Sidebar) --- */
+        .left-sidebar {
+            width: 260px;
+            min-width: 260px;
+            background-color: rgba(15, 15, 15, 0.75);
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .sidebar-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Card / Button Styles with Fog effect */
+        .fog-card {
+            position: relative;
+            width: 100%;
+            border-radius: 7px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .fog-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .fog-card.square-img {
+            aspect-ratio: 1 / 1;    
+            background-color: #2a2a2a; 
+            background-size: cover;
+        }
+
+        .fog-card.rectangular-img {
+            aspect-ratio: 16 / 9;
+            height: auto;
+            width: 100%;
+            background-color: #2a2a2a;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .fog-card.rect-btn {
+            height: 45px;
+            background-color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Black Fog Overlay */
+        .fog-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%);
+            display: flex;
+            align-items: flex-end;
+            padding: 10px;
+        }
+
+        .rect-btn .fog-overlay {
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(20, 20, 20, 0.4));
+        }
+
+        .card-text {
+            font-size: 14px;
+            font-weight: 600;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+        }
+
+        .spacer-line {
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 4px 0;
+        }
+
+        /* --- Board Columns (Right Side) --- */
+        .board-column {
+            width: 280px;
+            min-width: 280px;
+            background-color: rgba(20, 20, 20, 0.65);
+            border-radius: 8px;
+            max-height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 12px;
+            gap: 10px;
+            overflow-y: auto;
+            border-top: 3px solid #333;
+        }
+
+        /* Column Color Accents matching Themes */
+        .column-survival { border-top-color: #5c8e32; }
+        .column-creative { border-top-color: #de9c2a; }
+        .column-redstone { border-top-color: #b81d1d; }
+        .column-multiplayer { border-top-color: #2a83de; }
+        .column-modding { border-top-color: #8c2ade; }
+
+        .column-header {
+            font-size: 15px;
+            font-weight: bold;
+            padding: 4px 2px;
+            color: #ddd;
+        }
+
+        /* --- Pop-up Modal Window --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%; 
+            background-color: rgba(0, 0, 0, 0.85); 
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; 
+            padding-top: 100px; 
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            overflow-y: auto; 
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-box {
+            width: 1000px;
+            max-width: 90%;
+            background-color: #181818;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+        }
+
+        .modal-banner {
+            width: 100%;
+            height: 250px;
+            background-color: #333;
+            background-image: url('placeholder-banner.png');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-body {
+            padding: 25px;
+        }
+
+        .modal-title {
+            font-size: 22px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .modal-desc {
+            color: #b3b3b3;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Custom Scrollbar for columns */
+        .board-column::-webkit-scrollbar {
+            width: 6px;
+        }
+        .board-column::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.15);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">Minecraft Database</div>
+        <div class="nav-links">
+            <a href="Main.html">Back</a>
+            <a>Log in</a>
+            <a>Help</a>
+            <a>Contact</a>
+        </div>
+    </nav>
+
+    <main class="dashboard">
+
+        <!-- Left Sidebar Section -->
+        <div class="left-sidebar">
+            <div class="sidebar-title">Main Dashboard</div>
+            
+            <div class="fog-card square-img" onclick="openModal('O Minecraft', 'Gra sandboxowa stworzona przez Mojang Studios, oparta na języku Java (wersja PC) oraz C++ (wersja Bedrock). Oferuje (prawie) nieskończony, generowany świat zbudowany z trójwymiarowych bloków, w którym głównymi mechanikami są przetrwanie, tworzenie itemów oraz modyfikacja terenu.')" style="background-image: url('MCMAIN.png');">
+                <div class="fog-overlay">
+                    <div class="card-text">About Minecraft</div>
+                </div>
+            </div>
+
+            <div class="spacer-line"></div>
+
+            <div class="fog-card rect-btn" onclick="openModal('Community Hubs & Links', '<br><b>feedback.minecraft.net/hc/en-us</b> - zgłaszanie pomysłów na zmiany.  <br><b>bugs.mojang.com</b> - zgłaszanie błędów.  <br><b>www.minecraftforum.net</b> - oficjalne forum społeczności.  <br><b>www.reddit.com/r/Minecraft</b> - subreddity z poradami, budowlami i modami.  <br><b>www.youtube.com/c/Minecraft</b> - oficjalny kanał z aktualizacjami i wydarzeniami.');">
+                <div class="fog-overlay">
+                    <div class="card-text">Community Links</div>
+                </div>
+            </div>
+
+            <div class="spacer-line"></div>
+
+            <div class="fog-card rect-btn" onclick="openModal('Info Board Credits', '- Szymon Próchniewicz<br>- Olaf Mickiewicz<br>- Grzegorz Kasubowski')">
+                <div class="fog-overlay">
+                    <div class="card-text">Credits</div>
+                </div>
+            </div>
+
+            <div class="fog-card rect-btn" onclick="openModal('Sterowanie', '<b>Basic Setup:</b><br>W/A/S/D - Movement<br>Space - Jump<br>E - Open Inventory<br>Q - Drop Selected Item<br>Left Click - Mine / Attack<br>Right Click - Place Block / Use Item.')">
+                <div class="fog-overlay">
+                    <div class="card-text">Sterowanie</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Column 1: Survival & Progression -->
+        <div class="board-column column-survival">
+            <div class="column-header">Survival & Progresja</div>
+            
+             <div class="fog-card rectangular-img" onclick="openModal('About Survival & Progression', 'Główny tryb gry, w którym gracz musi zarządzać paskiem zdrowia (10 serduszek / 20 punktów życia) oraz paskiem głodu. Regeneracja zdrowia zależy bezpośrednio od poziomu nasycenia (saturation) po zjedzeniu posiłku. Śmierć skutkuje upuszczeniem całego ekwipunku w miejscu zgonu.')" style="background-image: url('MCS&P.png');">
+                <div class="fog-overlay">
+                    <div class="card-text">Zarys Survival</div>
+                </div>
+            </div>
+
+            <div class="spacer-line"></div>
+            
+            <div class="fog-card rect-btn" onclick="openModal('Early-Game Setup', 'Pozyskanie drewna, tworzenie podstawowych narzędzi, budowa schronienia, i pierwsze nocne przetrwanie przed atakami mobów.')">
+                <div class="fog-overlay"><div class="card-text">Early-Game Setup</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Mid-Game Zbieranie zasobów', 'Strip mining, branch mining, i eksploracja jaskiń w poszukiwaniu rudy żelaza, węgla, złota, redstone, lapis lazuli, diamentów i szmaragdów.')">
+                <div class="fog-overlay"><div class="card-text">Mid-Game Zbieranie zasobów</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Late-Game', 'Zabijanie bosów (Ender Dragon, Wither), zdobywanie Elytry, eksploracja End Cities, szukanie netherytu i budowa większy projektow')">
+                <div class="fog-overlay"><div class="card-text">Late-Game</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Eksploracja & Cartografia', 'Mapowanie świata, tworzenie map, i odkrywanie struktur generowanych losowo takich jak wioski, świątynie, fortece, i ruiny.')">
+                <div class="fog-overlay"><div class="card-text">Eksploracja & Cartografia</div></div>
+            </div>
+        </div>
+
+        <!-- Column 2: Creative & Architecture -->
+        <div class="board-column column-creative">
+            <div class="column-header">Creative & Architektura</div>
+
+             <div class="fog-card rectangular-img" onclick="openModal('About Creative & Architecture', 'Opanowanie geometrycznych technik budowy, estetyki bloków, zarządzania paletą kolorów i manipulacji dużymi środowiskami.')" style="background-image: url('MCC&A.png');">
+                <div class="fog-overlay">
+                    <div class="card-text">Creative Overview</div>
+                </div>
+            </div>
+
+            <div class="spacer-line"></div>
+            
+            <div class="fog-card rect-btn" onclick="openModal('Mega-Builds & Scale', 'Planowanie i konstruowanie ogromnych struktur, od realistycznych budynków po fantastyczne światy, z naciskiem na proporcje, detale i spójność tematyczną.')">
+                <div class="fog-overlay"><div class="card-text">Mega-Builds & Skala</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Interior Design & Detailing', 'Używanie różnorodnych bloków dekoracyjnych, trapdorów, schodów, slabów, oświetlenia i innych elementów budowlanych do tworzenia i funkcjonalnych przestrzeni wewnętrznych.')">
+                <div class="fog-overlay"><div class="card-text">Interior Design & Detaling</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Terraforming & Organic Building', 'Tworzenie naturalnie wyglądających krajobrazów, takich jak góry, doliny, rzeki, lasy i plaże, z naciskiem na nieregularne kształty, zróżnicowane tekstury i realistyczne formacje terenu.')">
+                <div class="fog-overlay"><div class="card-text">Terraforming & Budowanie organiczne</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Pixel Art & Map Art', 'tworzenie dużych, szczegółowych obrazów 2D lub 3D przy użyciu bloków Minecrafta, często z naciskiem na odwzorowanie postaci, scen lub ikon popkulturowych w formie pikselowej.')">
+                <div class="fog-overlay"><div class="card-text">Pixel Art & Map Art</div></div>
+            </div>
+        </div>
+
+        <!-- Column 3: Redstone & Automation -->
+        <div class="board-column column-redstone">
+            <div class="column-header">Redstone & Automacja</div>
+
+             <div class="fog-card rectangular-img" onclick="openModal('About Redstone & Automation', 'Opanowanie aktualizacji energii bloków, logiki przesyłu, mechanik warunkowych i logiki autonomii encji.')" style="background-image: url('MCR&A.png');">
+                <div class="fog-overlay">
+                    <div class="card-text">Zarys Redstone</div>
+                </div>
+            </div>
+
+            <div class="spacer-line"></div>
+            
+            <div class="fog-card rect-btn" onclick="openModal('Bramki logiczne & Obliczenia Redstone', 'Tworzenie and/or bramek logcznych, liczników, pamięci, i prostych procesorów przy użyciu mechaniki redstone do wykonywania złożonych operacji logicznych i obliczeniowych.')">
+                <div class="fog-overlay"><div class="card-text">Bramki logiczne & Obliczenia Redstone</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Resource Farming', 'Optymalizowanie mob farm, tworzenie farm kamienia, i zautomatyzowanych zbieranie warzyw i owoców.')">
+                <div class="fog-overlay"><div class="card-text">Resource Farming</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Mechaniki Quality-of-Life', 'Budowanie wieloitemowych filtrów przechowywania, ukrytych dróg wejściowych pistoletów i inteligentnych kolumn dystrybucji płynów.')">
+                <div class="fog-overlay"><div class="card-text">Mechaniki Quality-of-Life</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Transport & Maszyny Latające', 'Wykorzystywanie bloków slime i honey do tworzenia maszyn latających, systemów transportu, i pojazdów powietrznych.')">
+                <div class="fog-overlay"><div class="card-text">Transport & Maszyny Latające</div></div>
+            </div>
+        </div>
+
+        <!-- Column 4: Multiplayer & Community -->
+        <div class="board-column column-multiplayer">
+            <div class="column-header">Multiplayer & Community</div>
+
+             <div class="fog-card rectangular-img" onclick="openModal('About Multiplayer & Community', 'Mnóstwo filmow youtube, serwery z minigrami, społecznościowe projekty .')" style="background-image: url('MCM&C.png');">
+                <div class="fog-overlay">
+                    <div class="card-text">Zarys Multiplayer</div>
+                </div>
+            </div>
+
+            <div class="spacer-line"></div>
+            
+            <div class="fog-card rect-btn" onclick="openModal('Vanilla Survival Multiplayer (SMP)', 'Kolaboracja z gropami graczy w trybie przetrwania, wspólne budowanie, i organizowanie wydarzeń społecznościowych.')">
+                <div class="fog-overlay"><div class="card-text">Vanilla Survival Multiplayer (SMP)</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Faction & Serwery Anarchii', 'Strtegiczne sojusze, wojny frakcji, i bezprawne środowiska PvP z minimalnymi zasadami i dużą ilością graczy.')">
+                <div class="fog-overlay"><div class="card-text">Faction & Serwery Anarchii</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Sieć Minigier', 'Masywne serwery dedykowane do minigier, oferujące różnorodne tryby rozgrywki, takie jak SkyWars, BedWars, Parkour, i wiele innych.')">
+                <div class="fog-overlay"><div class="card-text">Sieć Minigier</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Roleplay & World-Building', 'Poznawanie głębokich histori serwerów, zarządzanych przez graczy stany polityczne, niestandardowe gospodarki handlowe i lore postaci.')">
+                <div class="fog-overlay"><div class="card-text">Roleplay & World-Building</div></div>
+            </div>
+        </div>
+
+        <!-- Column 5: Modding & Technical Customization -->
+        <div class="board-column column-modding">
+            <div class="column-header">Modowanie & Techniczne Dostosowanie</div>
+
+             <div class="fog-card rectangular-img" onclick="openModal('Modding Overview', 'Modyfikowanie kodu gry w celu dodania nowej zawartości. Odbywa się za pomocą loaderów modów.')" style="background-image: url('MCM&T.png');">
+                <div class="fog-overlay">
+                    <div class="card-text">Zarys Modowania</div>
+                </div>
+            </div>
+
+            <div class="spacer-line"></div>
+            
+            <div class="fog-card rect-btn" onclick="openModal('Content & Mechanics Expansion', 'Ogromne modyfikacje zmieniające grę nie do poznania. Przykłady to mody technologiczne (np. Create wprowadzający mechanikę rotacji i kół zębatych).')">
+                <div class="fog-overlay"><div class="card-text">Content & Mechanics Expansion</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Visual & Audio Enhancements', 'Dynamiczne shadery, tekstury wysokiej rozdzielczości, i pakiety zasobów audio, które poprawiają estetykę i atmosferę gry.')">
+                <div class="fog-overlay"><div class="card-text">Visual & Audio Enhancements</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Quality-of-Life (QoL) & Performance Mods', 'Modyfikacje skupiające się na poprawie interfejsu użytkownika, dodawaniu przydatnych funkcji (np. minimapa, ulepszony ekwipunek) i optymalizacji wydajności gry.')">
+                <div class="fog-overlay"><div class="card-text">Quality-of-Life & Performance Mods</div></div>
+            </div>
+            <div class="fog-card rect-btn" onclick="openModal('Custom Map Making & Coding', 'Używanie narzędzi takich jak Minecraft Command Blocks, datapacks, i niestandardowe mapy przygodowe do tworzenia unikalnych doświadczeń rozgrywki, zagadek i narracji.')">
+                <div class="fog-overlay"><div class="card-text">Custom Map Making & Coding</div></div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Modal Element Popup Context -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <div class="modal-banner">
+                <button class="modal-close" onclick="closeModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-title" id="modalTitle">Topic Title</div>
+                <div class="modal-desc" id="modalDesc">Detailed data context gets loaded dynamically here.</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const overlay = document.getElementById('modalOverlay');
+        const titleElem = document.getElementById('modalTitle');
+        const descElem = document.getElementById('modalDesc');
+
+        function openModal(title, description) {
+            titleElem.innerHTML = title;
+            descElem.innerHTML = description;
+            overlay.classList.add('active');
+        }
+
+        function closeModal() {
+            overlay.classList.remove('active');
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+</body>
+</html>
