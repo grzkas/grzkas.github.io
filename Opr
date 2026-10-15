@@ -1,0 +1,97 @@
+/**
+ * Klasa implementująca algorytm szybkiego sortowania (Quick Sort - wariant Lomuto).
+ */
+public class QuickSorter implements ISorter {
+
+    @Override
+    public void sort(int[] array) {
+        if (array == null || array.length <= 1) {
+            return;
+        }
+        quickSort(array, 0, array.length - 1);
+    }
+
+    private void quickSort(int[] array, int low, int high) {
+        if (low < high) {
+            int pivotIndex = partition(array, low, high);
+            quickSort(array, low, pivotIndex - 1);
+            quickSort(array, pivotIndex + 1, high);
+        }
+    }
+
+    private int partition(int[] array, int low, int high) {
+        int pivot = array[high];
+        int i = low - 1;
+
+        for (int j = low; j <= high - 1; j++) {
+            if (array[j] <= pivot) {
+                i = i + 1;
+                // Zamiana elementów A[i] i A[j]
+                int temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+        }
+
+        // Umieszczenie pivota na właściwym miejscu
+        int temp = array[i + 1];
+        array[i + 1] = array[high];
+        array[high] = temp;
+
+        return i + 1;
+    }
+
+    @Override
+    public String getName() {
+        return "Quick Sort";
+    }
+}
+
+
+public class Benchmark {
+
+    public static void main(String[] args) {
+        int[] testSizes = { 10_000, 50_000 };
+
+        // Tablica polimorficzna badanych algorytmów
+        ISorter[] sorters = {
+            new BubbleSorter(),
+            new InsertionSorter(),
+            new SelectionSorter(),
+            new QuickSorter()
+        };
+
+        for (int size : testSizes) {
+            System.out.println("============================================================");
+            System.out.printf("ROZPOCZĘCIE TESTÓW DLA ROZMIARU: %d ELEMENTÓW%n", size);
+            System.out.println("============================================================");
+
+            int[] baseArray = ArrayGenerator.generateRandom(size, 0, 100_000);
+
+            for (ISorter sorter : sorters) {
+                // Klonujemy tablicę, aby każdy algorytm sortował identyczny zestaw danych
+                int[] arrayCopy = baseArray.clone();
+
+                long startTime = System.nanoTime();
+                sorter.sort(arrayCopy);
+                long endTime = System.nanoTime();
+
+                double durationMs = (endTime - startTime) / 1_000_000.0;
+                boolean isSorted = isSortedAscending(arrayCopy);
+
+                System.out.printf("Algorytm: %-18s | Czas: %8.2f ms | Posortowano poprawnie: %b%n",
+                        sorter.getName(), durationMs, isSorted);
+            }
+            System.out.println();
+        }
+    }
+
+    private static boolean isSortedAscending(int[] array) {
+        for (int i = 0; i < array.length - 1; i++) {
+            if (array[i] > array[i + 1]) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
